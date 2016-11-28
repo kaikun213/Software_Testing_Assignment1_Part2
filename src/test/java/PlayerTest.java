@@ -52,5 +52,11 @@ public class PlayerTest {
 		int expected = Player.defaultCredits;
 		assertEquals(expected, sut.getCredits());
 	}
+	
+	@Test
+	public void shouldReturnDefaultName(){
+		String expected = "DefaultPlayerName";
+		assertEquals(expected ,sut.getName());
+	}
 
 }
