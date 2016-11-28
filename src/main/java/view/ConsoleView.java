@@ -6,17 +6,18 @@ import main.java.controller.GameController.Event;
 
 public class ConsoleView implements IView{
 	
-	PrintStream printStream;
+	PrintStream out;
 	
 	public ConsoleView(){
-		this.printStream = System.out;
+		this.out = System.out;
 	}
 	
-	public ConsoleView(PrintStream printStream){
-		this.printStream = printStream;
+	public ConsoleView(PrintStream out){
+		this.out = out;
 	}
 
 	public void showMenu() {
+		out.println();
 	}
 
 	public Event getUserEvent() {
