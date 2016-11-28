@@ -32,7 +32,14 @@ public class ConsoleViewTest {
 		
 		sut.showMenu();
 		
-		verify(printStream).println();
+		verify(printStream).println("-=[ Game of Chance MENU ]=-\n" +
+									"1 - Play the pick a number game\n" +
+									"2 - Play the No Match Dealer game\n" +
+									"3 - Play the Find the Ace game\n" +
+									"4 - View current high score\n" +
+									"5 - Change your user Name\n" +
+									"6 - Reset your account at 100 credits\n" +
+									"7 - Quit\n");
 	}
 
 }
