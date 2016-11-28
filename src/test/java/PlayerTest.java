@@ -32,5 +32,11 @@ public class PlayerTest {
 		sut.setCredits(100);
 		assertEquals(100, sut.getCredits());
 	}
+	
+	@Test
+	public void shouldReturnDefaultCredits(){
+		int expected = 100;
+		assertEquals(expected, sut.getCredits());
+	}
 
 }
