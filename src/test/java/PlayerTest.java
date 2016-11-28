@@ -26,5 +26,11 @@ public class PlayerTest {
 		sut.setName("Tester");
 		assertEquals("Tester",sut.getName());
 	}
+	
+	@Test
+	public void shouldReturnCredits(){
+		sut.setCredits(100);
+		assertEquals(100, sut.getCredits());
+	}
 
 }
