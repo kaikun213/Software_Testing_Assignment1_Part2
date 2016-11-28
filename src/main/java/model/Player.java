@@ -6,7 +6,7 @@ public class Player {
 	int credits;
 	
 	public Player(){
-		
+		this.credits = 100;
 	}
 
 	public String getName() {
