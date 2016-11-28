@@ -35,7 +35,7 @@ public class PlayerTest {
 	
 	@Test
 	public void shouldReturnDefaultCredits(){
-		int expected = 100;
+		int expected = Player.defaultCredits;
 		assertEquals(expected, sut.getCredits());
 	}
 	
@@ -49,7 +49,7 @@ public class PlayerTest {
 	public void shouldConstructWithNameAndDefaultCredits(){
 		sut = new Player("Tester");
 		assertEquals("Tester",sut.getName());
-		int expected = 100;
+		int expected = Player.defaultCredits;
 		assertEquals(expected, sut.getCredits());
 	}
 

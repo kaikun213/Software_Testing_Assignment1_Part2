@@ -2,16 +2,18 @@ package main.java.model;
 
 public class Player {
 	
+	public static final int defaultCredits = 100;
+	
 	String name;
 	int credits;
 	
 	public Player(){
-		this.credits = 100;
+		this.credits = defaultCredits;
 	}
 	
 	public Player(String name){
 		this.name = name;
-		this.credits = 100;
+		this.credits = defaultCredits;
 	}
 
 	public String getName() {
