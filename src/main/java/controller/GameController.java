@@ -13,7 +13,7 @@ public class GameController {
 	}
 	
 	public void play(){
-		//m_view.showMenu();
+		m_view.showMenu();
 	}
 	
 

@@ -30,7 +30,7 @@ public class GameControllerTest {
 		
 		sut.play();
 		
-		verify(view.showMenu());
+		verify(view).showMenu();
 	}
 
 }
