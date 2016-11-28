@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import main.java.errors.NoNameException;
 import main.java.model.Player;
 
 public class PlayerTest {
@@ -51,6 +52,11 @@ public class PlayerTest {
 		assertEquals("Tester",sut.getName());
 		int expected = Player.defaultCredits;
 		assertEquals(expected, sut.getCredits());
+	}
+	
+	@Test (expected=NoNameException.class)
+	public void shouldReturnErrorNoName(){
+		String actual = sut.getName();
 	}
 
 }
