@@ -41,5 +41,16 @@ public class ConsoleViewTest {
 									"6 - Reset your account at 100 credits\n" +
 									"7 - Quit\n");
 	}
+	
+	@Test
+	public void shouldSetDefaultPrintStream(){
+		sut = new ConsoleView();
+		try{
+			sut.showMenu();	
+		}
+		catch (NullPointerException e){
+			fail("Nullpointer exception thrown : No default set");
+		}
+	}
 
 }
