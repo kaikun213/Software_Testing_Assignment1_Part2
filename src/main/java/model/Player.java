@@ -9,6 +9,7 @@ public class Player {
 	
 	public Player(){
 		this.credits = defaultCredits;
+		this.name = "DefaultPlayerName";
 	}
 	
 	public Player(String name){
@@ -16,7 +17,7 @@ public class Player {
 		this.credits = defaultCredits;
 	}
 
-	public String getName() {
+	public String getName(){
 		return name;
 	}
 	public void setName(String name) {
