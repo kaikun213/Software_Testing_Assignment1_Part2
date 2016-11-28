@@ -17,12 +17,11 @@ public class Player {
 	}
 
 	public int getCredits() {
-		//return credits;
-		return 0;
+		return credits;
 	}
 
 	public void setCredits(int credits) {
-		//this.credits = credits;
+		this.credits = credits;
 	}
 	
 
