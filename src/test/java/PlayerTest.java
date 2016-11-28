@@ -38,5 +38,11 @@ public class PlayerTest {
 		int expected = 100;
 		assertEquals(expected, sut.getCredits());
 	}
+	
+	@Test
+	public void shouldConstructWithName(){
+		sut = new Player("Tester");
+		assertEquals("Tester",sut.getName());
+	}
 
 }

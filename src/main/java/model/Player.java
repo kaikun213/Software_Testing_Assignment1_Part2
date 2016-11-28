@@ -8,6 +8,10 @@ public class Player {
 	public Player(){
 		this.credits = 100;
 	}
+	
+	public Player(String name){
+		//this.name = name;
+	}
 
 	public String getName() {
 		return name;
