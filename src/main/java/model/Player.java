@@ -10,11 +10,10 @@ public class Player {
 	}
 
 	public String getName() {
-		//return name;
-		return null;
+		return name;
 	}
 	public void setName(String name) {
-		//this.name = name;
+		this.name = name;
 	}
 
 	public int getCredits() {
