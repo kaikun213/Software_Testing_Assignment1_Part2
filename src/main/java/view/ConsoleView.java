@@ -9,7 +9,7 @@ public class ConsoleView implements IView{
 	PrintStream out;
 	
 	public ConsoleView(){
-		this.out = System.out;
+		this.out = System.out;	// set default PrintStream
 	}
 	
 	public ConsoleView(PrintStream out){
