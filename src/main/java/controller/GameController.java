@@ -13,6 +13,7 @@ public class GameController {
 	}
 	
 	public void play(){
+		m_player = PlayerDAO.jaxbXMLToObject();
 		m_view.showMenu();
 	}
 	
