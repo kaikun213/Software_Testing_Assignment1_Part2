@@ -21,7 +21,7 @@ public class GameControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		// initialize SUT
-		IView view = mock(ConsoleView.class);
+		view = mock(ConsoleView.class);
 		sut = new GameController(view);
 	}
 

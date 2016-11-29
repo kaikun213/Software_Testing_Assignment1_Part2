@@ -1,5 +1,6 @@
 package test.java;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
@@ -40,6 +41,28 @@ public class GameControllerStaticTest {
 		//Verify static call
 		PowerMockito.verifyStatic(times(1));
 		PlayerDAO.jaxbXMLToObject();
+	}
+	
+	@Test
+	public void shouldTryToSavePlayer(){
+		// initialize system
+		IView view = mock(ConsoleView.class);
+		sut = new GameController(view);
+		
+		// stub static method
+		PowerMockito.mockStatic(PlayerDAO.class);
+		try {
+			PowerMockito.doNothing().when(PlayerDAO.class, "jaxbObjectToXML", Mockito.any(Player.class));
+		} catch (Exception e) {
+			fail("The save Player to File method failed");
+		}
+		
+		//Run
+		sut.play();
+		
+		//Verify static call
+		PowerMockito.verifyStatic(times(1));
+		PlayerDAO.jaxbObjectToXML(Mockito.any(Player.class));
 	}
 	
 	
