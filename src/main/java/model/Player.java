@@ -1,5 +1,8 @@
 package main.java.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Player {
 	
 	public static final int defaultCredits = 100;
