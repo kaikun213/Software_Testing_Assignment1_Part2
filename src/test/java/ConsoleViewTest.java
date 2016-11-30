@@ -3,13 +3,18 @@ package test.java;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import main.java.model.Player;
 import main.java.view.ConsoleView;
 
 public class ConsoleViewTest {
@@ -57,13 +62,34 @@ public class ConsoleViewTest {
 	public void shouldRegisterPlayer(){
 		// initialize & mock
 		PrintStream printStream = mock(PrintStream.class);
-		sut = new ConsoleView(printStream);
+		BufferedReader input = mock(BufferedReader.class);
+		try {
+			Mockito.when(input.readLine()).thenReturn("Test name");
+		} catch (IOException e1) {
+			fail("Failed Test by trying to mock readLine-method");
+		}
+		sut = new ConsoleView(printStream, input);
 		
 		//run system
-		sut.registerPlayer();
+		Player tester = sut.registerPlayer();
 		
+		/* verification */
+		
+		// output message
 		verify(printStream).println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
 									"Enter your Name:");
+		// verify call
+		try {
+			verify(input).readLine();
+		} catch (IOException e) {
+			fail("Failed Test by trying to scan the name");
+		}
+		
+		assertEquals("Test name", tester.getName());
+		
+		verify(printStream).println("Welcome to the Game of Chance" + tester.getName() +"\n" +
+				"You have been given"+ Player.defaultCredits +" credits.\n");
+		
 		
 
 	}

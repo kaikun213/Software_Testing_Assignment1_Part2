@@ -1,5 +1,8 @@
 package main.java.view;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import main.java.controller.GameController.Event;
@@ -8,13 +11,21 @@ import main.java.model.Player;
 public class ConsoleView implements IView{
 	
 	PrintStream out;
+	BufferedReader in;
 	
 	public ConsoleView(){
 		this.out = System.out;	// set default PrintStream
+		this.in = new BufferedReader(new InputStreamReader(System.in));	// set default InputStream (Console)
 	}
 	
 	public ConsoleView(PrintStream out){
 		this.out = out;
+		this.in = new BufferedReader(new InputStreamReader(System.in));
+	}
+	
+	public ConsoleView(PrintStream out,BufferedReader in){
+		this.out = out;
+		this.in = in;
 	}
 
 	public void showMenu() {
@@ -33,9 +44,26 @@ public class ConsoleView implements IView{
 	}
 
 	public Player registerPlayer() {
-		//out.println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
+		out.println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
 									"Enter your Name:");
+//		String name = getName();
+//		out.println("Welcome to the Game of Chance" + name +"\n" +
+//					"You have been given"+ Player.defaultCredits +" credits.\n");
+//		return new Player(name);
 		return null;
+	}
+	
+	private String getName(){
+		String name = "";
+		
+		try {
+			name = in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return name;
+		
 	}
 
 }
