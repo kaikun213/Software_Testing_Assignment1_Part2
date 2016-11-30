@@ -10,6 +10,17 @@ import main.java.model.Player;
 
 public class ConsoleView implements IView{
 	
+	final static String MENU = "-=[ Game of Chance MENU ]=-\n" +
+								"1 - Play the pick a number game\n" +
+								"2 - Play the No Match Dealer game\n" +
+								"3 - Play the Find the Ace game\n" +
+								"4 - View current high score\n" +
+								"5 - Change your user Name\n" +
+								"6 - Reset your account at 100 credits\n" +
+								"7 - Quit\n";
+	final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
+									"Enter your Name:";
+	
 	PrintStream out;
 	BufferedReader in;
 	
@@ -29,14 +40,7 @@ public class ConsoleView implements IView{
 	}
 
 	public void showMenu() {
-		out.println("-=[ Game of Chance MENU ]=-\n" +
-					"1 - Play the pick a number game\n" +
-					"2 - Play the No Match Dealer game\n" +
-					"3 - Play the Find the Ace game\n" +
-					"4 - View current high score\n" +
-					"5 - Change your user Name\n" +
-					"6 - Reset your account at 100 credits\n" +
-					"7 - Quit\n");
+		out.println(MENU);
 	}
 
 	public Event getUserEvent() {
@@ -44,8 +48,7 @@ public class ConsoleView implements IView{
 	}
 
 	public Player registerPlayer() {
-		out.println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
-									"Enter your Name:");
+		out.println(REGISTER);
 		String name = getName();
 		out.println("Welcome to the Game of Chance" + name +"\n" +
 					"You have been given"+ Player.defaultCredits +" credits.\n");
