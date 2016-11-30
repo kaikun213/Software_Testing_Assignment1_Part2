@@ -31,7 +31,7 @@ public class GameOfChance {
 		// load player
 		Player a_player = load();
 		// play games
-		//a_player = controller.play(a_player);
+		a_player = controller.play(a_player);
 		// save player
 		save(a_player);
 	}
