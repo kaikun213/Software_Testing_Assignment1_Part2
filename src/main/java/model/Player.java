@@ -35,5 +35,9 @@ public class Player {
 		this.credits = credits;
 	}
 	
+	public void resetCredits(){
+		this.credits = defaultCredits;
+	}
+	
 
 }

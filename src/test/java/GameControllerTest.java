@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import main.java.controller.GameController;
 import main.java.controller.GameController.Event;
+import main.java.model.Player;
 import main.java.view.ConsoleView;
 import main.java.view.IView;
 
@@ -35,21 +36,55 @@ public class GameControllerTest {
 	public void shouldShowMenu() {
 		// mocking so it terminates
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
+		Player player = Mockito.mock(Player.class);
 
-		sut.play();
+		// run
+		sut.play(player);
+		
+		// verify
 		verify(view).showMenu();
 		
 	}
 	
 	@Test
 	public void shouldQuitProgram(){
+		// initialize and mock
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
-		
-		sut.play();
+		Player player = Mockito.mock(Player.class);
+
+		//run
+		sut.play(player);
 		
 		// verify exactly called 1 time only
 		verify(view, times(1)).showMenu();
 		verify(view, times(1)).getUserEvent();
+	}
+	
+	@Test
+	public void shouldTryToRegisterPlayer(){
+		// initialize system
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
+		
+		// stub player return
+		Mockito.when(view.registerPlayer()).thenReturn(new Player("Tester"));
+		
+		// run
+		sut.play(null);
+		
+		// verify
+		verify(view).registerPlayer();
+	}
+	
+	@Test
+	public void shouldResetCredits(){
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Reset).thenReturn(Event.Quit);
+		Player player = Mockito.mock(Player.class);
+		
+		sut.play(player);
+		
+		// verify exactly called 2 time only
+		verify(view, times(2)).showMenu();
+		verify(view, times(2)).getUserEvent();
 	}
 	
 }
