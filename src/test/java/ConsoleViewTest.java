@@ -52,5 +52,20 @@ public class ConsoleViewTest {
 			fail("Nullpointer exception thrown : No default set");
 		}
 	}
+	
+	@Test
+	public void shouldRegisterPlayer(){
+		// initialize & mock
+		PrintStream printStream = mock(PrintStream.class);
+		sut = new ConsoleView(printStream);
+		
+		//run system
+		sut.registerPlayer();
+		
+		verify(printStream).println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
+									"Enter your Name:");
+		
+
+	}
 
 }
