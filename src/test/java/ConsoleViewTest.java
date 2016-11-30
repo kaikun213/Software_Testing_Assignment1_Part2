@@ -5,9 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.Before;

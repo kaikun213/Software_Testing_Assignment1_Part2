@@ -46,11 +46,10 @@ public class ConsoleView implements IView{
 	public Player registerPlayer() {
 		out.println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
 									"Enter your Name:");
-//		String name = getName();
-//		out.println("Welcome to the Game of Chance" + name +"\n" +
-//					"You have been given"+ Player.defaultCredits +" credits.\n");
-//		return new Player(name);
-		return null;
+		String name = getName();
+		out.println("Welcome to the Game of Chance" + name +"\n" +
+					"You have been given"+ Player.defaultCredits +" credits.\n");
+		return new Player(name);
 	}
 	
 	private String getName(){
