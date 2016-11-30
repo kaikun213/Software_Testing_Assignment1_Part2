@@ -72,24 +72,64 @@ public class ConsoleViewTest {
 	}
 	
 	@Test 
-	public void shouldGetUserEvent(){
+	public void shouldGetUserEvent() throws IOException{
 		// initialize & mock
 		PrintStream printStream = mock(PrintStream.class);
 		BufferedReader input = mock(BufferedReader.class);
-		try {
-			Mockito.when(input.read()).thenReturn(1);
-		} catch (IOException e1) {
-			fail("Failed Test by trying to mock read-method");
-		}
+		Mockito.when(input.read()).thenReturn(1);
 		sut = new ConsoleView(printStream, input);
 		
-		//run system
+		//run & verify 1
+		Mockito.when(input.read()).thenReturn(1);
 		Event actual = sut.getUserEvent();
-		
-		//verify
 		Event expected = Event.PlayPickNumer;
-		
 		assertEquals(expected, actual);
+		
+		//run & verify 2
+		Mockito.when(input.read()).thenReturn(2);
+		actual = sut.getUserEvent();
+		expected = Event.PlayNoMatchDealer;
+		assertEquals(expected, actual);
+		
+		//run & verify 3
+		Mockito.when(input.read()).thenReturn(3);
+		actual = sut.getUserEvent();
+		expected = Event.PlayFindAce;
+		assertEquals(expected, actual);
+				
+		//run & verify 4
+		Mockito.when(input.read()).thenReturn(4);
+		actual = sut.getUserEvent();
+		expected = Event.ViewHighscore;
+		assertEquals(expected, actual);
+		
+		//run & verify 5
+		Mockito.when(input.read()).thenReturn(5);
+		actual = sut.getUserEvent();
+		expected = Event.ChangeName;
+		assertEquals(expected, actual);
+				
+		//run & verify 6
+		Mockito.when(input.read()).thenReturn(6);
+		actual = sut.getUserEvent();
+		expected = Event.Reset;
+		assertEquals(expected, actual);
+		
+		//run & verify 7
+		Mockito.when(input.read()).thenReturn(7);
+		actual = sut.getUserEvent();
+		expected = Event.Quit;
+		assertEquals(expected, actual);
+	}
+	
+	@Test(expected = IOException.class)
+	public void shouldFailReadUserLine() throws IOException{
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		Mockito.when(input.read()).thenThrow(new IOException());
+		sut = new ConsoleView(printStream, input);
+		
+		sut.getUserEvent();
 	}
 
 }

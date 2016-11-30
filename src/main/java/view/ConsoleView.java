@@ -32,16 +32,12 @@ public class ConsoleView implements IView{
 		out.println(MENU);
 	}
 
-	public Event getUserEvent(){
+	public Event getUserEvent() throws IOException{
 		Event event = null;
 		int choice = 0;
 
 		while(event == null){
-			try {
-				choice = in.read();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			choice = in.read();
 			if (choice == 1) event = Event.PlayPickNumer;
 			if (choice == 2) event = Event.PlayNoMatchDealer;
 			if (choice == 3) event = Event.PlayFindAce;
@@ -56,21 +52,19 @@ public class ConsoleView implements IView{
 
 	public Player registerPlayer() {
 		out.println(REGISTER);
-		String name = getName();
+		String name = "";
+		try {
+			name = getName();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		out.println("Welcome to the Game of Chance" + name +"\n" +
 					"You have been given"+ Player.defaultCredits +" credits.\n");
 		return new Player(name);
 	}
 	
-	private String getName(){
-		String name = "";
-		
-		try {
-			name = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+	private String getName() throws IOException{
+		String name = in.readLine();
 		return name;
 		
 	}

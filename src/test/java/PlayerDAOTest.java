@@ -25,6 +25,11 @@ import main.java.model.Player;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({File.class, PlayerDAO.class})
 public class PlayerDAOTest {
+	
+	@Test
+	public void testClassCreation(){
+		PlayerDAO testClass = new PlayerDAO();
+	}
 
 	@Test
 	public void testMockFile() {
@@ -45,18 +50,15 @@ public class PlayerDAOTest {
 	}
 	
 	@Test
-	public void jaxbXMLToObjectTest() {
+	public void jaxbXMLToObjectTest() throws Exception {
 		// first, create a mock for File
 		final String filepath = System.getProperty("user.dir") + "/src/test/resources/PlayerTest.xml";
         final File fileMock = Mockito.mock(File.class);
         Mockito.when(fileMock.getAbsolutePath()).thenReturn(filepath);
         
         // return the mock when file-object is constructed
-        try {
-			PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(fileMock);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(fileMock);
+		
         
         // write test data
         try {
@@ -79,28 +81,22 @@ public class PlayerDAOTest {
         assertEquals(expected, actual.getName());
         
         // teardown - flush test data
-        try {
-			PrintWriter writer = new PrintWriter(filepath);
-			writer.print(""); 
-			writer.close();
-		} catch (FileNotFoundException e) {
-			fail("XMLToObject parsing failed.");
-		}
+		PrintWriter writer = new PrintWriter(filepath);
+		writer.print(""); 
+		writer.close();
+	
         
 	}
 	
 	@Test
-	public void jaxbObjectToXMLTest() {
+	public void jaxbObjectToXMLTest() throws Exception {
 		// first, pass test-file at construction
 		final String filepath = System.getProperty("user.dir") + "/src/test/resources/PlayerTest.xml";
         final File fileMock = new File(filepath);
         
         // return the test-file when file-object is constructed
-        try {
-			PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(fileMock);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		PowerMockito.whenNew(File.class).withAnyArguments().thenReturn(fileMock);
+		
         
         // Create Test-Data
         Player tester = new Player("Tester");
@@ -137,5 +133,7 @@ public class PlayerDAOTest {
 			fail("XMLToObject parsing failed.");
 		}
 	}
+	
+	
 
 }

@@ -2,6 +2,9 @@ package test.java;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+
+import java.io.IOException;
+
 import static org.mockito.Mockito.times;
 
 
@@ -33,7 +36,7 @@ public class GameControllerTest {
 	}
 
 	@Test
-	public void shouldShowMenu() {
+	public void shouldShowMenu() throws IOException {
 		// mocking so it terminates
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
 		Player player = Mockito.mock(Player.class);
@@ -47,7 +50,7 @@ public class GameControllerTest {
 	}
 	
 	@Test
-	public void shouldQuitProgram(){
+	public void shouldQuitProgram() throws IOException{
 		// initialize and mock
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
 		Player player = Mockito.mock(Player.class);
@@ -61,7 +64,7 @@ public class GameControllerTest {
 	}
 	
 	@Test
-	public void shouldTryToRegisterPlayer(){
+	public void shouldTryToRegisterPlayer() throws IOException{
 		// initialize system
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
 		
@@ -76,7 +79,7 @@ public class GameControllerTest {
 	}
 	
 	@Test
-	public void shouldResetCredits(){
+	public void shouldResetCredits() throws IOException{
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Reset).thenReturn(Event.Quit);
 		Player player = Mockito.mock(Player.class);
 		

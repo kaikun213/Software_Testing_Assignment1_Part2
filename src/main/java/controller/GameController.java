@@ -1,5 +1,7 @@
 package main.java.controller;
 
+import java.io.IOException;
+
 import main.java.model.Player;
 import main.java.view.IView;
 
@@ -30,7 +32,12 @@ public class GameController {
 		// start gameplay
 		do{
 			m_view.showMenu();
+			try {
 			userChoice = m_view.getUserEvent();
+			} catch (IOException e) {
+				userChoice = Event.Quit;
+				e.printStackTrace();
+			}
 			
 //			if (userChoice == Event.Reset){
 //				m_player.resetCredits();
