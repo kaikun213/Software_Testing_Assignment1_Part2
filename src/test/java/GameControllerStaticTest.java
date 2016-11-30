@@ -54,6 +54,9 @@ public class GameControllerStaticTest {
 		PowerMockito.mockStatic(PlayerDAO.class);
 		Mockito.when(PlayerDAO.jaxbXMLToObject()).thenReturn(null);
 		
+		// stub player return
+		Mockito.when(view.registerPlayer()).thenReturn(new Player("Tester"));
+		
 		//Run
 		sut.play();
 		
@@ -63,6 +66,7 @@ public class GameControllerStaticTest {
 		
 		verify(view).registerPlayer();
 	}
+	
 	
 	@Test
 	public void shouldTryToSavePlayer(){
