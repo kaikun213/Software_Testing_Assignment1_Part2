@@ -3,6 +3,7 @@ package main.java.view;
 import java.io.PrintStream;
 
 import main.java.controller.GameController.Event;
+import main.java.model.Player;
 
 public class ConsoleView implements IView{
 	
@@ -28,6 +29,10 @@ public class ConsoleView implements IView{
 	}
 
 	public Event getUserEvent() {
+		return null;
+	}
+
+	public Player registerPlayer() {
 		return null;
 	}
 
