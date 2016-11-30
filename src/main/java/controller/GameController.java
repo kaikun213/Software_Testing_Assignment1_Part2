@@ -20,11 +20,17 @@ public class GameController {
 	
 	
 	public void play(){
+		// load or register new player
 		m_player = PlayerDAO.jaxbXMLToObject();
 		if (m_player == null) m_player = m_view.registerPlayer();
 		
-		m_view.showMenu();
+		// start gameplay
+		//do{
+			m_view.showMenu();
+
+		//}while(m_view.getUserEvent() != Event.Quit);
 		
+		// save user data to file
 		PlayerDAO.jaxbObjectToXML(m_player);
 	}
 	
