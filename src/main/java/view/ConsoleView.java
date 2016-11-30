@@ -33,6 +33,8 @@ public class ConsoleView implements IView{
 	}
 
 	public Player registerPlayer() {
+		//out.println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
+									"Enter your Name:");
 		return null;
 	}
 
