@@ -2,7 +2,6 @@ package main.java.view;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import main.java.controller.GameController.Event;
@@ -37,20 +36,20 @@ public class ConsoleView implements IView{
 		Event event = null;
 		int choice = 0;
 
-//		while(event == null){
-//			try {
-//				choice = in.read();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			if (choice == 1) event = Event.PlayPickNumer;
-//			if (choice == 2) event = Event.PlayNoMatchDealer;
-//			if (choice == 3) event = Event.PlayFindAce;
-//			if (choice == 4) event = Event.ViewHighscore;
-//			if (choice == 5) event = Event.ChangeName;
-//			if (choice == 6) event = Event.Reset;
-//			if (choice == 7) event = Event.Quit;
-//		}
+		while(event == null){
+			try {
+				choice = in.read();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (choice == 1) event = Event.PlayPickNumer;
+			if (choice == 2) event = Event.PlayNoMatchDealer;
+			if (choice == 3) event = Event.PlayFindAce;
+			if (choice == 4) event = Event.ViewHighscore;
+			if (choice == 5) event = Event.ChangeName;
+			if (choice == 6) event = Event.Reset;
+			if (choice == 7) event = Event.Quit;
+		}
 	
 		return event;
 	}
