@@ -14,6 +14,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 
 import main.java.controller.GameController;
+import main.java.controller.GameController.Event;
 import main.java.dao.PlayerDAO;
 import main.java.model.Player;
 import main.java.view.ConsoleView;
@@ -30,7 +31,9 @@ public class GameControllerStaticTest {
 	public void shouldTryLoadPlayer(){
 		// initialize system
 		IView view = mock(ConsoleView.class);
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
 		sut = new GameController(view);
+
 		
 		// stub static method
 		PowerMockito.mockStatic(PlayerDAO.class);
@@ -48,6 +51,7 @@ public class GameControllerStaticTest {
 	public void shouldTryToRegisterPlayer(){
 		// initialize system
 		IView view = mock(ConsoleView.class);
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
 		sut = new GameController(view);
 		
 		// stub static method
@@ -72,6 +76,7 @@ public class GameControllerStaticTest {
 	public void shouldTryToSavePlayer(){
 		// initialize system
 		IView view = mock(ConsoleView.class);
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
 		sut = new GameController(view);
 		
 		// stub static method
