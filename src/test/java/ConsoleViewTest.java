@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import org.junit.After;
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import main.java.controller.GameController.Event;
 import main.java.model.Player;
 import main.java.view.ConsoleView;
 
@@ -29,31 +31,12 @@ public class ConsoleViewTest {
 
 	@Test
 	public void shouldShowMenu() {
-		
 		PrintStream printStream = mock(PrintStream.class);
-		sut = new ConsoleView(printStream);
+		sut = new ConsoleView(printStream, new BufferedReader(new InputStreamReader(System.in)));
 		
 		sut.showMenu();
 		
-		verify(printStream).println("-=[ Game of Chance MENU ]=-\n" +
-									"1 - Play the pick a number game\n" +
-									"2 - Play the No Match Dealer game\n" +
-									"3 - Play the Find the Ace game\n" +
-									"4 - View current high score\n" +
-									"5 - Change your user Name\n" +
-									"6 - Reset your account at 100 credits\n" +
-									"7 - Quit\n");
-	}
-	
-	@Test
-	public void shouldSetDefaultPrintStream(){
-		sut = new ConsoleView();
-		try{
-			sut.showMenu();	
-		}
-		catch (NullPointerException e){
-			fail("Nullpointer exception thrown : No default set");
-		}
+		verify(printStream).println(ConsoleView.MENU);
 	}
 	
 	@Test
@@ -74,8 +57,7 @@ public class ConsoleViewTest {
 		/* verification */
 		
 		// output message
-		verify(printStream).println("-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
-									"Enter your Name:");
+		verify(printStream).println(ConsoleView.REGISTER);
 		// verify call
 		try {
 			verify(input).readLine();
@@ -87,9 +69,27 @@ public class ConsoleViewTest {
 		
 		verify(printStream).println("Welcome to the Game of Chance" + tester.getName() +"\n" +
 				"You have been given"+ Player.defaultCredits +" credits.\n");
+	}
+	
+	@Test 
+	public void shouldGetUserEvent(){
+		// initialize & mock
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		try {
+			Mockito.when(input.read()).thenReturn(1);
+		} catch (IOException e1) {
+			fail("Failed Test by trying to mock read-method");
+		}
+		sut = new ConsoleView(printStream, input);
 		
+		//run system
+		Event actual = sut.getUserEvent();
 		
-
+		//verify
+		Event expected = Event.PlayPickNumer;
+		
+		assertEquals(expected, actual);
 	}
 
 }

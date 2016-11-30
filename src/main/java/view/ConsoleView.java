@@ -10,29 +10,19 @@ import main.java.model.Player;
 
 public class ConsoleView implements IView{
 	
-	final static String MENU = "-=[ Game of Chance MENU ]=-\n" +
-								"1 - Play the pick a number game\n" +
-								"2 - Play the No Match Dealer game\n" +
-								"3 - Play the Find the Ace game\n" +
-								"4 - View current high score\n" +
-								"5 - Change your user Name\n" +
-								"6 - Reset your account at 100 credits\n" +
-								"7 - Quit\n";
-	final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
-									"Enter your Name:";
+	public final static String MENU = "-=[ Game of Chance MENU ]=-\n" +
+									"1 - Play the pick a number game\n" +
+									"2 - Play the No Match Dealer game\n" +
+									"3 - Play the Find the Ace game\n" +
+									"4 - View current high score\n" +
+									"5 - Change your user Name\n" +
+									"6 - Reset your account at 100 credits\n" +
+									"7 - Quit\n";
+	public final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
+										"Enter your Name:";
 	
 	PrintStream out;
 	BufferedReader in;
-	
-	public ConsoleView(){
-		this.out = System.out;	// set default PrintStream
-		this.in = new BufferedReader(new InputStreamReader(System.in));	// set default InputStream (Console)
-	}
-	
-	public ConsoleView(PrintStream out){
-		this.out = out;
-		this.in = new BufferedReader(new InputStreamReader(System.in));
-	}
 	
 	public ConsoleView(PrintStream out,BufferedReader in){
 		this.out = out;
@@ -43,8 +33,26 @@ public class ConsoleView implements IView{
 		out.println(MENU);
 	}
 
-	public Event getUserEvent() {
-		return null;
+	public Event getUserEvent(){
+		Event event = null;
+		int choice = 0;
+
+//		while(event == null){
+//			try {
+//				choice = in.read();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			if (choice == 1) event = Event.PlayPickNumer;
+//			if (choice == 2) event = Event.PlayNoMatchDealer;
+//			if (choice == 3) event = Event.PlayFindAce;
+//			if (choice == 4) event = Event.ViewHighscore;
+//			if (choice == 5) event = Event.ChangeName;
+//			if (choice == 6) event = Event.Reset;
+//			if (choice == 7) event = Event.Quit;
+//		}
+	
+		return event;
 	}
 
 	public Player registerPlayer() {

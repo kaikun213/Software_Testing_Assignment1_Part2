@@ -7,12 +7,18 @@ import main.java.view.IView;
 public class GameController {
 	
 	public static enum Event {
-			Quit,
-			Play
+			PlayPickNumer,
+			PlayNoMatchDealer,
+			PlayFindAce,
+			ViewHighscore,
+			ChangeName,
+			Reset,
+			Quit
 	}
 	
 	Player m_player;
 	IView m_view;
+	Event userChoice;
 	
 	public GameController(IView a_view){
 		this.m_view = a_view;
@@ -27,8 +33,12 @@ public class GameController {
 		// start gameplay
 		do{
 			m_view.showMenu();
+			userChoice = m_view.getUserEvent();
+//			if (userChoice == Event.Reset){
+//				m_player.setCredits(Player.defaultCredits);
+//			}
 
-		}while(m_view.getUserEvent() != Event.Quit);
+		}while(userChoice != Event.Quit);
 		
 		// save user data to file
 		PlayerDAO.jaxbObjectToXML(m_player);
