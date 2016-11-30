@@ -25,10 +25,10 @@ public class GameController {
 		if (m_player == null) m_player = m_view.registerPlayer();
 		
 		// start gameplay
-		//do{
+		do{
 			m_view.showMenu();
 
-		//}while(m_view.getUserEvent() != Event.Quit);
+		}while(m_view.getUserEvent() != Event.Quit);
 		
 		// save user data to file
 		PlayerDAO.jaxbObjectToXML(m_player);
