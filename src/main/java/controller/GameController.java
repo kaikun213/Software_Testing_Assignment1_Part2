@@ -21,6 +21,8 @@ public class GameController {
 	
 	public void play(){
 		m_player = PlayerDAO.jaxbXMLToObject();
+		if (m_player == null) m_player = m_view.registerPlayer();
+		
 		m_view.showMenu();
 		
 		PlayerDAO.jaxbObjectToXML(m_player);
