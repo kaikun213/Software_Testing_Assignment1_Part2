@@ -56,14 +56,14 @@ public class ConsoleView implements IView{
 		try {
 			name = getName();
 		} catch (IOException e) {
-			name = "InvalidInputExceptionName";
+			name = "InvalidInputExceptionName";	// If userinput fails give dully-name (requirements-definition)
 		}
 		out.println("Welcome to the Game of Chance" + name +"\n" +
 					"You have been given"+ Player.defaultCredits +" credits.\n");
 		return new Player(name);
 	}
 	
-	private String getName() throws IOException{
+	public String getName() throws IOException{
 		String name = in.readLine();
 		return name;
 		

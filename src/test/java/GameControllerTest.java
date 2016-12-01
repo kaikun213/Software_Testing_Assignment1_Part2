@@ -7,6 +7,8 @@ import java.io.IOException;
 
 
 import static org.mockito.Mockito.times;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.any;
 
 
 import org.junit.After;
@@ -106,6 +108,41 @@ public class GameControllerTest {
 		verify(view, times(2)).showMenu();
 		verify(view, times(2)).getUserEvent();
 		verify(player).resetCredits();
+	}
+	
+	@Test
+	public void shouldChangeName() throws IOException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.ChangeName).thenReturn(Event.Quit);
+		Mockito.when(view.getName()).thenReturn("Tester");
+
+		Player player = Mockito.mock(Player.class);
+		Mockito.when(player.getName()).thenReturn("Tester");
+		
+		player = sut.play(player);
+		
+		// verify exactly called 2 time only
+		verify(view, times(2)).showMenu();
+		verify(view, times(2)).getUserEvent();
+		verify(view, times(1)).getName();
+		verify(player).setName(any(String.class));
+		assertEquals("Tester", player.getName());
+	}
+	
+	@Test
+	public void shouldFailReadNameAndGiveDullyName() throws IOException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.ChangeName).thenReturn(Event.Quit);
+		Mockito.when(view.getName()).thenThrow(new IOException());
+		Player player = Mockito.mock(Player.class);
+		Mockito.when(player.getName()).thenReturn("InvalidInputExceptionName");
+		
+		player = sut.play(player);
+		
+		// verify exactly called 2 time only
+		verify(view, times(2)).showMenu();
+		verify(view, times(2)).getUserEvent();
+		verify(view, times(1)).getName();
+		verify(player).setName(any(String.class));
+		assertEquals("InvalidInputExceptionName", player.getName());
 	}
 
 	

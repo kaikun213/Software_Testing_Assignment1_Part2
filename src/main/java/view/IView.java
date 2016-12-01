@@ -12,5 +12,6 @@ public interface IView {
 	public void showMenu();
 	public Player registerPlayer();
 	public Event getUserEvent() throws IOException;
+	public String getName() throws IOException;
 
 }
