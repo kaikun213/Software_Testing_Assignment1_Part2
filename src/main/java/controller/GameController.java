@@ -2,6 +2,7 @@ package main.java.controller;
 
 import java.io.IOException;
 
+import main.java.model.PickANumberGame;
 import main.java.model.Player;
 import main.java.view.IView;
 
@@ -58,6 +59,8 @@ public class GameController {
 			
 			if (userChoice == Event.PlayPickNumer){
 				m_view.showPickANumberGameRules();
+				int number = m_view.getNumberBetween(PickANumberGame.MIN_NUMBER, PickANumberGame.MAX_NUMBER);
+				
 			}
 
 		}while(userChoice != Event.Quit);
