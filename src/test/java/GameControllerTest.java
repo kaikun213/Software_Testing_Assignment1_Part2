@@ -4,7 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
-
+import java.util.Random;
 
 import static org.mockito.Mockito.times;
 import static org.junit.Assert.*;
@@ -19,6 +19,10 @@ import org.mockito.Mockito;
 import main.java.controller.GameController;
 import main.java.controller.GameController.Event;
 import main.java.model.Player;
+import main.java.model.error.NotEnoughCreditsException;
+import main.java.model.game.AbstractGameFactory;
+import main.java.model.game.ConcreteGameFactoryA;
+import main.java.model.game.PickANumberGame;
 import main.java.view.ConsoleView;
 import main.java.view.IView;
 
@@ -26,12 +30,15 @@ public class GameControllerTest {
 	
 	GameController sut;
 	IView view;
+	Player player;
 	
 	@Before
 	public void setUp() throws Exception {
 		// initialize SUT
 		view = mock(ConsoleView.class);
-		sut = new GameController(view);
+		sut = new GameController(view, new ConcreteGameFactoryA());
+		player = Mockito.mock(Player.class);
+
 	}
 
 	@After
@@ -42,7 +49,6 @@ public class GameControllerTest {
 	public void shouldShowMenu() throws IOException {
 		// mocking so it terminates
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
-		Player player = Mockito.mock(Player.class);
 
 		// run
 		sut.play(player);
@@ -56,7 +62,6 @@ public class GameControllerTest {
 	public void shouldQuitProgram() throws IOException{
 		// initialize and mock
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
-		Player player = Mockito.mock(Player.class);
 
 		//run
 		sut.play(player);
@@ -100,7 +105,6 @@ public class GameControllerTest {
 	@Test
 	public void shouldResetCredits() throws IOException{
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Reset).thenReturn(Event.Quit);
-		Player player = Mockito.mock(Player.class);
 		
 		sut.play(player);
 		
@@ -115,7 +119,6 @@ public class GameControllerTest {
 		Mockito.when(view.getUserEvent()).thenReturn(Event.ChangeName).thenReturn(Event.Quit);
 		Mockito.when(view.getName()).thenReturn("Tester");
 
-		Player player = Mockito.mock(Player.class);
 		Mockito.when(player.getName()).thenReturn("Tester");
 		
 		player = sut.play(player);
@@ -132,7 +135,6 @@ public class GameControllerTest {
 	public void shouldFailReadNameAndGiveDullyName() throws IOException{
 		Mockito.when(view.getUserEvent()).thenReturn(Event.ChangeName).thenReturn(Event.Quit);
 		Mockito.when(view.getName()).thenThrow(new IOException());
-		Player player = Mockito.mock(Player.class);
 		Mockito.when(player.getName()).thenReturn("InvalidInputExceptionName");
 		
 		player = sut.play(player);
@@ -148,7 +150,6 @@ public class GameControllerTest {
 	@Test
 	public void shouldShowHighscore() throws IOException{
 		Mockito.when(view.getUserEvent()).thenReturn(Event.ViewHighscore).thenReturn(Event.Quit);
-		Player player = Mockito.mock(Player.class);
 		Mockito.when(player.getHighscore()).thenReturn(Player.defaultCredits);
 		
 		player = sut.play(player);
@@ -159,14 +160,36 @@ public class GameControllerTest {
 	}
 	
 	@Test
-	public void showPickANumberGameRules() throws IOException{
+	public void shouldPlayPickANumberGame() throws IOException, NotEnoughCreditsException{
+		// mock View, Player, GameFactory and Game behaviour (dependent)
 		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayPickNumer).thenReturn(Event.Quit);
 		Mockito.doNothing().when(view).showPickANumberGameRules();
-		Player player = Mockito.mock(Player.class);
-
+		Mockito.doNothing().when(view).showResultPickANumberGame(any(Boolean.class), any(Integer.class));
+		Mockito.when(view.getNumberBetween(any(Integer.class), any(Integer.class))).thenReturn(5);
+		
+		PickANumberGame game = Mockito.mock(PickANumberGame.class);
+		Mockito.doNothing().when(game).play(any(Integer.class));
+		Mockito.when(game.hasWon()).thenReturn(true);
+		Mockito.when(game.getWinningNumber()).thenReturn(5);
+		
+		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
+		Mockito.when(gameFactory.getPickANumberGame(any(Player.class), any(Random.class))).thenReturn(game);
+		
+		Mockito.doNothing().when(player).decreaseCredits(any(Integer.class));
+		Mockito.doNothing().when(player).increaseCredits(any(Integer.class));
+		
+		sut = new GameController(view, gameFactory);
+		
+		// run
 		player = sut.play(player);
 		
+		// verify every call one time
 		verify(view, times(1)).showPickANumberGameRules();
+		verify(view, times(1)).showResultPickANumberGame(true, 5);
+		verify(view, times(1)).getNumberBetween(any(Integer.class), any(Integer.class));
+		verify(game, times(1)).play(5);
+		verify(game, times(1)).getWinningNumber();
+		verify(game, times(1)).hasWon();
 	}
 
 	

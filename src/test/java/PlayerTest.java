@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import main.java.model.Player;
+import main.java.model.error.NotEnoughCreditsException;
 
 public class PlayerTest {
 	
@@ -29,8 +30,31 @@ public class PlayerTest {
 	
 	@Test
 	public void shouldReturnCredits(){
-		sut.setCredits(100);
 		assertEquals(100, sut.getCredits());
+	}
+	
+	@Test
+	public void shouldIncreaseCreditsAndSetHighscore(){
+		sut.resetCredits();
+		sut.increaseCredits(100);
+		
+		int highscore = sut.getHighscore();
+		assertEquals(Player.defaultCredits + 100, sut.getCredits());
+		assertEquals(highscore, sut.getCredits());
+	}
+	
+	@Test
+	public void shouldDecreaseCredits() throws NotEnoughCreditsException{
+		sut.resetCredits();
+		sut.decreaseCredits(50);
+		
+		assertEquals(Player.defaultCredits - 50, sut.getCredits());
+	}
+	
+	@Test(expected = NotEnoughCreditsException.class)
+	public void shouldDecreaseCreditsAndThrowException() throws NotEnoughCreditsException{
+		sut.resetCredits();
+		sut.decreaseCredits(Player.defaultCredits+1);
 	}
 	
 	@Test
@@ -70,8 +94,9 @@ public class PlayerTest {
 	
 	@Test
 	public void shouldReturnHighscore() {
-		sut.setHighscore(200);
-		assertEquals(200,sut.getHighscore());
+		sut.resetCredits();
+		sut.increaseCredits(100);
+		assertEquals(Player.defaultCredits + 100,sut.getHighscore());
 	}
 	
 	@Test

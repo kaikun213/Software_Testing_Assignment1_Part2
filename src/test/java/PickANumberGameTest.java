@@ -11,9 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
-import main.java.model.PickANumberGame;
 import main.java.model.Player;
+import main.java.model.error.NotEnoughCreditsException;
+import main.java.model.game.PickANumberGame;
 
 public class PickANumberGameTest {
 	
@@ -26,6 +28,9 @@ public class PickANumberGameTest {
 
 	@Before
 	public void setUp() throws Exception {
+		playerMock = mock(Player.class);
+		Mockito.doNothing().when(playerMock).decreaseCredits(any(Integer.class));
+		Mockito.doNothing().when(playerMock).increaseCredits(any(Integer.class));
 		randMock = mock(Random.class);
 		sut = new PickANumberGame(playerMock, randMock);
 	}
@@ -36,18 +41,18 @@ public class PickANumberGameTest {
 	}
 
 	@Test
-	public void testPlay() {
+	public void testPlay() throws NotEnoughCreditsException {
 		when(randMock.nextInt(any(Integer.class))).thenReturn(1);
-		sut.play(1);
+		sut.play(PickANumberGame.MIN_NUMBER);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void shouldFailGuessUnderMinimum() throws IndexOutOfBoundsException {
+	public void shouldFailGuessUnderMinimum() throws IndexOutOfBoundsException, NotEnoughCreditsException {
 		sut.play(PickANumberGame.MIN_NUMBER-1);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void shouldFailGuessOverMaximum() throws IndexOutOfBoundsException {
+	public void shouldFailGuessOverMaximum() throws IndexOutOfBoundsException, NotEnoughCreditsException {
 		sut.play(PickANumberGame.MAX_NUMBER+1);
 	}
 	
@@ -55,9 +60,18 @@ public class PickANumberGameTest {
 	public void shouldFailGetWinningNumberWithoutPlay() throws IndexOutOfBoundsException {
 		sut.getWinningNumber();
 	}
+	
+	@Test(expected = NotEnoughCreditsException.class)
+	public void shouldFailNotEnoughCreditsException() throws NotEnoughCreditsException{
+		playerMock = Mockito.mock(Player.class);
+		Mockito.doThrow(new NotEnoughCreditsException()).when(playerMock).decreaseCredits(any(Integer.class));
+		sut = new PickANumberGame(playerMock, randMock);
+		
+		sut.play(PickANumberGame.MIN_NUMBER);
+	}
 
 	@Test
-	public void testHasWon() {
+	public void testHasWon() throws NotEnoughCreditsException {
 		when(randMock.nextInt(any(Integer.class))).thenReturn(1);
 		
 		//run & verify
@@ -70,7 +84,7 @@ public class PickANumberGameTest {
 	}
 
 	@Test
-	public void testGetWinningNumber() {
+	public void testGetWinningNumber() throws NotEnoughCreditsException {
 		when(randMock.nextInt(any(Integer.class))).thenReturn(1);
 		
 		//run & verify
