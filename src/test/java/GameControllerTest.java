@@ -144,6 +144,20 @@ public class GameControllerTest {
 		verify(player).setName(any(String.class));
 		assertEquals("InvalidInputExceptionName", player.getName());
 	}
+	
+	@Test
+	public void shouldShowHighscore() throws IOException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.ViewHighscore).thenReturn(Event.Quit);
+		Player player = Mockito.mock(Player.class);
+		Mockito.when(player.getHighscore()).thenReturn(Player.defaultCredits);
+		
+		player = sut.play(player);
+		
+		verify(view, times(1)).showHighScore(any(Integer.class));
+		verify(player, times(1)).getHighscore();
+		assertEquals(Player.defaultCredits, player.getHighscore());
+
+	}
 
 	
 }

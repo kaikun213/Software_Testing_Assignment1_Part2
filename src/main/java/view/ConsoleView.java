@@ -68,4 +68,11 @@ public class ConsoleView implements IView{
 		return name;
 	}
 
+	public void showHighScore(int highscore) {
+		out.println("\n===================| HIGHSCORE |====================\n" +
+					"You currently have the high score of" + highscore +" credits!\n");
+	}
+	
+	
+
 }
