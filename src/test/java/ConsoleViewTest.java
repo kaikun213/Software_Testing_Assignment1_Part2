@@ -143,5 +143,17 @@ public class ConsoleViewTest {
 		
 		assertEquals(tester.getName(), "InvalidInputExceptionName");
 	}
+	
+	@Test
+	public void shouldShowHighScore(){
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		
+		sut.showHighScore(Player.defaultCredits);
+		
+		verify(printStream).println("\n===================| HIGHSCORE |====================\n" +
+									"You currently have the high score of" + Player.defaultCredits +" credits!\n");
+	}
 
 }
