@@ -101,17 +101,21 @@ public class PlayerDAOTest {
 		
         
         // Create Test-Data
-        Player tester = new Player("Tester");
+        Player playerMock = Mockito.mock(Player.class);
+        Mockito.when(playerMock.getName()).thenReturn("Tester");
+        Mockito.when(playerMock.getCredits()).thenReturn(Player.defaultCredits);
+        Mockito.when(playerMock.getHighscore()).thenReturn(Player.defaultCredits);
+
                 
         // run the SUT
-        PlayerDAO.jaxbObjectToXML(tester);
+        PlayerDAO.jaxbObjectToXML(playerMock);
         
         // verify
         String expected   = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + "\n" +
 			        		"<player>" +"\n" +
-							"<name>Tester</name>" +"\n" +
 			        		"<credits>"+Player.defaultCredits+"</credits>" +"\n" +
 							"<highscore>"+Player.defaultCredits+"</highscore>" + "\n" +
+							"<name>Tester</name>" +"\n" +
 							"</player>" +"\n";
         List<String> actualList = new ArrayList<String>();
 		try {

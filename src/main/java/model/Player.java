@@ -8,7 +8,6 @@ import main.java.model.error.NotEnoughCreditsException;
 public class Player {
 	
 	public static final int defaultCredits = 100;
-	
 	String name;
 	int credits;
 	int highscore;
@@ -34,6 +33,14 @@ public class Player {
 
 	public int getCredits() {
 		return credits;
+	}
+
+	public void setCredits(int credits) {
+		this.credits = credits;
+	}
+
+	public void setHighscore(int highscore) {
+		this.highscore = highscore;
 	}
 
 	public void increaseCredits(int credits) {
