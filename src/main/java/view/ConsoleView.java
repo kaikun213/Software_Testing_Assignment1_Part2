@@ -20,6 +20,8 @@ public class ConsoleView implements IView{
 	public final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
 										"Enter your Name:";
 	
+	public final static String INVALID_CHOICE = "This is an invalid selection of choice";
+	
 	PrintStream out;
 	BufferedReader in;
 	
@@ -45,6 +47,7 @@ public class ConsoleView implements IView{
 			if (choice == 5) event = Event.ChangeName;
 			if (choice == 6) event = Event.Reset;
 			if (choice == 7) event = Event.Quit;
+			else out.println(INVALID_CHOICE);
 		}
 	
 		return event;
@@ -69,8 +72,8 @@ public class ConsoleView implements IView{
 	}
 
 	public void showHighScore(int highscore) {
-//		out.println("\n===================| HIGHSCORE |====================\n" +
-//					"You currently have the high score of" + highscore +" credits!\n");
+		out.println("\n===================| HIGHSCORE |====================\n" +
+					"You currently have the high score of" + highscore +" credits!\n");
 	}
 	
 	
