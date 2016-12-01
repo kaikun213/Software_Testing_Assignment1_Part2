@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import javax.xml.bind.JAXBException;
 
 import main.java.controller.GameController;
+import main.java.model.game.ConcreteGameFactoryA;
 import main.java.view.ConsoleView;
 import main.java.view.IView;
 
@@ -16,7 +17,7 @@ public class Program {
 		IView view = new ConsoleView(System.out, new BufferedReader(new InputStreamReader(System.in)));
 
 		try {
-			game.run(new GameController(view));
+			game.run(new GameController(view, new ConcreteGameFactoryA()));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
