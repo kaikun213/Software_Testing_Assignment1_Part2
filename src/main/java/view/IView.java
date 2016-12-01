@@ -10,12 +10,13 @@ import main.java.model.Player;
 public interface IView {
 	
 	public void showMenu();
-	public void showHighScore(int highscore);
-	public void showPickANumberGameRules();
-	
-
+	public void showHighScore(int highscore);	
 	public Player registerPlayer();
 	public Event getUserEvent() throws IOException;
 	public String getName() throws IOException;
+	
+	public void showPickANumberGameRules();
+	public int getNumberBetween(int from, int until);
+	public void showResult(boolean won, int winningNumber);
 
 }

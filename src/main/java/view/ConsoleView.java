@@ -82,7 +82,17 @@ public class ConsoleView implements IView{
 	}
 
 	public void showPickANumberGameRules() {
-//		out.println(PickANumberGameRules);
+		out.println(PickANumberGameRules);
+	}
+
+	public int getNumberBetween(int from, int until) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void showResult(boolean won, int winningNumber) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
