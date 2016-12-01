@@ -26,6 +26,7 @@ import main.java.model.Player;
 @PrepareForTest({File.class, PlayerDAO.class})
 public class PlayerDAOTest {
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testClassCreation(){
 		PlayerDAO testClass = new PlayerDAO();

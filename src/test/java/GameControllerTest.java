@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
 
+
 import static org.mockito.Mockito.times;
 
 
@@ -79,6 +80,22 @@ public class GameControllerTest {
 	}
 	
 	@Test
+	public void shouldFailToGetUserChoice() throws IOException{
+		// initialize system
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Reset).thenThrow(new IOException());
+		
+		// stub player return
+		Mockito.when(view.registerPlayer()).thenReturn(new Player("Tester"));
+		
+		// run
+		sut.play(null);
+		
+		// verify exactly 2 rounds cause variable is set quit when exception occours.
+		verify(view, times(2)).showMenu();
+		
+	}
+	
+	@Test
 	public void shouldResetCredits() throws IOException{
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Reset).thenReturn(Event.Quit);
 		Player player = Mockito.mock(Player.class);
@@ -88,6 +105,8 @@ public class GameControllerTest {
 		// verify exactly called 2 time only
 		verify(view, times(2)).showMenu();
 		verify(view, times(2)).getUserEvent();
+		verify(player).resetCredits();
 	}
+
 	
 }

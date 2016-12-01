@@ -56,7 +56,7 @@ public class ConsoleView implements IView{
 		try {
 			name = getName();
 		} catch (IOException e) {
-			e.printStackTrace();
+			name = "InvalidInputExceptionName";
 		}
 		out.println("Welcome to the Game of Chance" + name +"\n" +
 					"You have been given"+ Player.defaultCredits +" credits.\n");

@@ -36,12 +36,11 @@ public class GameController {
 			userChoice = m_view.getUserEvent();
 			} catch (IOException e) {
 				userChoice = Event.Quit;
-				e.printStackTrace();
 			}
 			
-//			if (userChoice == Event.Reset){
-//				m_player.resetCredits();
-//			}
+			if (userChoice == Event.Reset){
+				m_player.resetCredits();
+			}
 
 		}while(userChoice != Event.Quit);
 		

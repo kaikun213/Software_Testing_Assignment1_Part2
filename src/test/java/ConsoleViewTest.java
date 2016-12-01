@@ -131,5 +131,17 @@ public class ConsoleViewTest {
 		
 		sut.getUserEvent();
 	}
+	
+	@Test
+	public void shouldFailToReadName() throws IOException{
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		Mockito.when(input.readLine()).thenThrow(new IOException());
+		sut = new ConsoleView(printStream, input);
+		
+		Player tester = sut.registerPlayer();
+		
+		assertEquals(tester.getName(), "InvalidInputExceptionName");
+	}
 
 }

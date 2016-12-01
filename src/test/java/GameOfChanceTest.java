@@ -10,8 +10,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.mock;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -26,15 +24,6 @@ public class GameOfChanceTest {
 	
 	@Spy
 	GameOfChance sut = new GameOfChance();;
-
-	@Before
-	public void setUp() throws Exception {
-		 
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 	
 	@Test
 	public void shouldPlayGameController() throws JAXBException{
@@ -50,6 +39,39 @@ public class GameOfChanceTest {
 		// verify
 		verify(controller, times(1)).play(any(Player.class));
 	}
+	
+	@Test
+	public void shouldInvokeLoadPlayerInRun() throws JAXBException{
+		// mock load, play and save method calls
+		GameController controller = mock(GameController.class);
+		when(controller.play(any(Player.class))).thenReturn(new Player("Tester"));
+		doNothing().when(sut).save(any(Player.class));
+		when(sut.load()).thenReturn(any(Player.class));
+
+		
+		
+		//run
+		sut.run(controller);
+		
+		// verify
+		verify(sut, times(1)).load();
+	}
+	
+	@Test
+	public void shouldInvokeSavePlayerInRun() throws JAXBException{
+		// mock load, play and save method calls
+		GameController controller = mock(GameController.class);
+		when(controller.play(any(Player.class))).thenReturn(new Player("Tester"));
+		doNothing().when(sut).save(any(Player.class));
+		when(sut.load()).thenReturn(any(Player.class));
+	
+		//run
+		sut.run(controller);
+		
+		// verify
+		verify(sut, times(1)).save(any(Player.class));
+	}
+	
 
 
 }
