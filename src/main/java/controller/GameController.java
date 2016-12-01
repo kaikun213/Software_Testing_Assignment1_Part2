@@ -41,6 +41,16 @@ public class GameController {
 			if (userChoice == Event.Reset){
 				m_player.resetCredits();
 			}
+			
+//			if (userChoice == Event.ChangeName){
+//				String name;
+//				try {
+//					name = m_view.getName();
+//				} catch (IOException e) {
+//					name = "InvalidInputExceptionName";	// If userinput fails give dully-name (requirements-definition)
+//				}
+//				m_player.setName(name);
+//			}
 
 		}while(userChoice != Event.Quit);
 		
