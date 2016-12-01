@@ -45,13 +45,13 @@ public class ConsoleView implements IView{
 
 		while(event == null){
 			choice = in.read();
-			if (choice == 1) event = Event.PlayPickNumer;
-			if (choice == 2) event = Event.PlayNoMatchDealer;
-			if (choice == 3) event = Event.PlayFindAce;
-			if (choice == 4) event = Event.ViewHighscore;
-			if (choice == 5) event = Event.ChangeName;
-			if (choice == 6) event = Event.Reset;
-			if (choice == 7) event = Event.Quit;
+			if (choice == '1') event = Event.PlayPickNumer;
+			else if (choice == '2') event = Event.PlayNoMatchDealer;
+			else if (choice == '3') event = Event.PlayFindAce;
+			else if (choice == '4') event = Event.ViewHighscore;
+			else if (choice == '5') event = Event.ChangeName;
+			else if (choice == '6') event = Event.Reset;
+			else if (choice == '7') event = Event.Quit;
 			else out.println(INVALID_CHOICE);
 		}
 	
