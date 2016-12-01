@@ -73,5 +73,11 @@ public class PlayerTest {
 		sut.setHighscore(200);
 		assertEquals(200,sut.getHighscore());
 	}
+	
+	@Test
+	public void shouldSetDefaultHighscore(){
+		assertEquals(Player.defaultCredits,sut.getHighscore());
+
+	}
 
 }
