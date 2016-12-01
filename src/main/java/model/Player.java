@@ -2,6 +2,8 @@ package main.java.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import main.java.model.error.NotEnoughCreditsException;
+
 @XmlRootElement
 public class Player {
 	
@@ -34,8 +36,13 @@ public class Player {
 		return credits;
 	}
 
-	public void setCredits(int credits) {
-		this.credits = credits;
+	public void increaseCredits(int credits) {
+		this.credits += credits;
+		if (this.credits > this.highscore) this.highscore = this.credits;
+	}
+	public void decreaseCredits(int credits) throws NotEnoughCreditsException {
+		if ((this.credits-credits)<0) throw new NotEnoughCreditsException();
+		this.credits -= credits;
 	}
 	
 	public void resetCredits(){
@@ -44,10 +51,6 @@ public class Player {
 
 	public int getHighscore() {
 		return highscore;
-	}
-
-	public void setHighscore(int highscore) {
-		this.highscore = highscore;
 	}
 	
 

@@ -90,7 +90,18 @@ public class ConsoleView implements IView{
 		return 0;
 	}
 
-	public void showResult(boolean won, int winningNumber) {
+	public void showResultPickANumberGame(boolean won, int winningNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void showNotEnoughCredits() {
+		// PickANumberGame.CREDIT_COST = amount it costs
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void showCurrentState(String playerName, int playerCredits) {
 		// TODO Auto-generated method stub
 		
 	}

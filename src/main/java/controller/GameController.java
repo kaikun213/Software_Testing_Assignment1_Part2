@@ -1,9 +1,13 @@
 package main.java.controller;
 
 import java.io.IOException;
+import java.util.Random;
 
-import main.java.model.PickANumberGame;
 import main.java.model.Player;
+import main.java.model.error.NotEnoughCreditsException;
+import main.java.model.game.AbstractGameFactory;
+import main.java.model.game.IPickANumberGame;
+import main.java.model.game.PickANumberGame;
 import main.java.view.IView;
 
 public class GameController {
@@ -21,9 +25,11 @@ public class GameController {
 	Player m_player;
 	IView m_view;
 	Event userChoice;
+	AbstractGameFactory games;
 	
-	public GameController(IView a_view){
+	public GameController(IView a_view, AbstractGameFactory games){
 		this.m_view = a_view;
+		this.games = games;
 	}
 	
 	public Player play(Player a_player){
@@ -58,9 +64,15 @@ public class GameController {
 			}
 			
 			if (userChoice == Event.PlayPickNumer){
+				IPickANumberGame game = games.getPickANumberGame(m_player, new Random());
 				m_view.showPickANumberGameRules();
-				int number = m_view.getNumberBetween(PickANumberGame.MIN_NUMBER, PickANumberGame.MAX_NUMBER);
-				
+				int guess = m_view.getNumberBetween(PickANumberGame.MIN_NUMBER, PickANumberGame.MAX_NUMBER);
+				try {
+					game.play(guess);
+					m_view.showResultPickANumberGame(game.hasWon(), game.getWinningNumber());
+				} catch (NotEnoughCreditsException e) {
+					m_view.showNotEnoughCredits();
+				}
 			}
 
 		}while(userChoice != Event.Quit);

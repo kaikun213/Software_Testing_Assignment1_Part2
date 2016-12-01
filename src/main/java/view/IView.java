@@ -17,6 +17,10 @@ public interface IView {
 	
 	public void showPickANumberGameRules();
 	public int getNumberBetween(int from, int until);
-	public void showResult(boolean won, int winningNumber);
+	public void showResultPickANumberGame(boolean won, int winningNumber);
+
+	public void showNotEnoughCredits();
+	
+	public void showCurrentState(String playerName, int playerCredits);
 
 }
