@@ -55,6 +55,10 @@ public class GameController {
 			if (userChoice == Event.ViewHighscore){
 				m_view.showHighScore(m_player.getHighscore());
 			}
+			
+			if (userChoice == Event.PlayPickNumer){
+				m_view.showPickANumberGameRules();
+			}
 
 		}while(userChoice != Event.Quit);
 		
