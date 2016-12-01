@@ -66,7 +66,6 @@ public class ConsoleView implements IView{
 	public String getName() throws IOException{
 		String name = in.readLine();
 		return name;
-		
 	}
 
 }

@@ -9,6 +9,7 @@ public class Player {
 	
 	String name;
 	int credits;
+	int highscore;
 	
 	public Player(){
 		this.credits = defaultCredits;
@@ -37,6 +38,14 @@ public class Player {
 	
 	public void resetCredits(){
 		this.credits = defaultCredits;
+	}
+
+	public int getHighscore() {
+		return highscore;
+	}
+
+	public void setHighscore(int highscore) {
+		this.highscore = highscore;
 	}
 	
 
