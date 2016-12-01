@@ -65,7 +65,8 @@ public class PlayerDAOTest {
         try {
 			PrintWriter writer = new PrintWriter(filepath);
 			writer.println( "<player>" +"\n" +
-							"<credits>100</credits>" +"\n" +
+							"<credits>"+Player.defaultCredits+"</credits>" +"\n" +
+							"<highscore>"+Player.defaultCredits+"</highscore>" + "\n" +
 							"<name>Tester</name>" +"\n" +
 							"</player>" +"\n"); 
 			writer.close();
@@ -108,7 +109,8 @@ public class PlayerDAOTest {
         // verify
         String expected   = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + "\n" +
         					"<player>" +"\n" +
-							"<credits>100</credits>" +"\n" +
+							"<credits>"+Player.defaultCredits+"</credits>" +"\n" +
+        					"<highscore>"+Player.defaultCredits+"</highscore>" + "\n" +
 							"<name>Tester</name>" +"\n" +
 							"</player>" +"\n";
         List<String> actualList = new ArrayList<String>();
