@@ -156,7 +156,17 @@ public class GameControllerTest {
 		verify(view, times(1)).showHighScore(any(Integer.class));
 		verify(player, times(1)).getHighscore();
 		assertEquals(Player.defaultCredits, player.getHighscore());
+	}
+	
+	@Test
+	public void showPickANumberGameRules() throws IOException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayPickNumer).thenReturn(Event.Quit);
+		Mockito.doNothing().when(view).showPickANumberGameRules();
+		Player player = Mockito.mock(Player.class);
 
+		player = sut.play(player);
+		
+		verify(view, times(1)).showPickANumberGameRules();
 	}
 
 	
