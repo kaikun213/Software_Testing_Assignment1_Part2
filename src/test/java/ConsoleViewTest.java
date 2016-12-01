@@ -175,5 +175,16 @@ public class ConsoleViewTest {
 		verify(printStream).println("\n===================| HIGHSCORE |====================\n" +
 									"You currently have the high score of" + Player.defaultCredits +" credits!\n");
 	}
+	
+	@Test
+	public void shouldShowPickANumberGameRules(){
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		
+		sut.showPickANumberGameRules();
+		
+		verify(printStream).println(ConsoleView.PickANumberGameRules);
+	}
 
 }

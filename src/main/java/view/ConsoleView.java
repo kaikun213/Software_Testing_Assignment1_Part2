@@ -22,6 +22,11 @@ public class ConsoleView implements IView{
 	
 	public final static String INVALID_CHOICE = "This is an invalid selection of choice";
 	
+	public final static String PickANumberGameRules = 	"\n###### Pick a Number ######\n"+
+														"This game costs 10 credits to play. Simply pick a number\n"+
+														"beetween 1 and 20, and if you pick the winning number, you\n"+
+														"will win the jackpot of 100 credits!\n\n";
+	
 	PrintStream out;
 	BufferedReader in;
 	
@@ -74,6 +79,10 @@ public class ConsoleView implements IView{
 	public void showHighScore(int highscore) {
 		out.println("\n===================| HIGHSCORE |====================\n" +
 					"You currently have the high score of" + highscore +" credits!\n");
+	}
+
+	public void showPickANumberGameRules() {
+//		out.println(PickANumberGameRules);
 	}
 	
 	
