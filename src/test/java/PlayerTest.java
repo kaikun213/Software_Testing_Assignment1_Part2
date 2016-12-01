@@ -67,5 +67,11 @@ public class PlayerTest {
 		int actual = sut.getCredits();
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	public void shouldReturnHighscore() {
+		sut.setHighscore(200);
+		assertEquals(200,sut.getHighscore());
+	}
 
 }
