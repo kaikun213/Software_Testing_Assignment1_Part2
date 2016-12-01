@@ -122,6 +122,26 @@ public class ConsoleViewTest {
 		assertEquals(expected, actual);
 	}
 	
+	@Test
+	public void shouldOutPutInvalidChoice() throws IOException{
+		// initialize & mock
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		Mockito.when(input.read()).thenReturn(8).thenReturn(7);
+		sut = new ConsoleView(printStream, input);
+		
+		// run
+		sut.getUserEvent();
+		
+		//verify
+		verify(printStream).println(ConsoleView.INVALID_CHOICE);
+		
+		// run + verify quit to terminate
+		Event actual = sut.getUserEvent();
+		Event expected = Event.Quit;
+		assertEquals(expected, actual);
+	}
+	
 	@Test(expected = IOException.class)
 	public void shouldFailReadUserLine() throws IOException{
 		PrintStream printStream = mock(PrintStream.class);
