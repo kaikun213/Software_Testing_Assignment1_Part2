@@ -14,11 +14,13 @@ public class Player {
 	public Player(){
 		this.credits = defaultCredits;
 		this.name = "DefaultPlayerName";
+		this.highscore = defaultCredits;
 	}
 	
 	public Player(String name){
 		this.name = name;
 		this.credits = defaultCredits;
+		this.highscore = defaultCredits;
 	}
 
 	public String getName(){
