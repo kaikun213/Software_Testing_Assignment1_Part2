@@ -51,6 +51,10 @@ public class GameController {
 				}
 				m_player.setName(name);
 			}
+			
+			if (userChoice == Event.ViewHighscore){
+				m_view.showHighScore(m_player.getHighscore());
+			}
 
 		}while(userChoice != Event.Quit);
 		
