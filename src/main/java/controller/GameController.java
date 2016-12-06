@@ -73,10 +73,10 @@ public class GameController {
 						game.play(guess);
 						m_view.showResultPickANumberGame(game.hasWon(), game.getWinningNumber());
 					} catch (NotEnoughCreditsException e) {
-						// m_view.showNotEnoughCredits();
+						 m_view.showNotEnoughCredits();
 					}
 				} catch (IOException e1) {
-					//userChoice = Event.Quit;	// IO-Exception = Quit Application (Requirement)
+					userChoice = Event.Quit;	// IO-Exception = Quit Application (Requirement)
 				}
 			}
 
