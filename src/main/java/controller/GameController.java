@@ -42,7 +42,7 @@ public class GameController {
 			try {
 			userChoice = m_view.getUserEvent();
 			} catch (IOException e) {
-				userChoice = Event.Quit;
+				userChoice = Event.Quit;	// IO-Exception = Quit Application (Requirement)
 			}
 			
 			if (userChoice == Event.Reset){
@@ -66,12 +66,17 @@ public class GameController {
 			if (userChoice == Event.PlayPickNumer){
 				IPickANumberGame game = games.getPickANumberGame(m_player, new Random());
 				m_view.showPickANumberGameRules();
-				int guess = m_view.getNumberBetween(PickANumberGame.MIN_NUMBER, PickANumberGame.MAX_NUMBER);
+				int guess;
 				try {
-					game.play(guess);
-					m_view.showResultPickANumberGame(game.hasWon(), game.getWinningNumber());
-				} catch (NotEnoughCreditsException e) {
-					m_view.showNotEnoughCredits();
+					guess = m_view.getNumberBetween(PickANumberGame.MIN_NUMBER, PickANumberGame.MAX_NUMBER);
+					try {
+						game.play(guess);
+						m_view.showResultPickANumberGame(game.hasWon(), game.getWinningNumber());
+					} catch (NotEnoughCreditsException e) {
+						m_view.showNotEnoughCredits();
+					}
+				} catch (IOException e1) {
+					userChoice = Event.Quit;	// IO-Exception = Quit Application (Requirement)
 				}
 			}
 

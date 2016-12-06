@@ -76,47 +76,47 @@ public class ConsoleViewTest {
 		// initialize & mock
 		PrintStream printStream = mock(PrintStream.class);
 		BufferedReader input = mock(BufferedReader.class);
-		Mockito.when(input.read()).thenReturn(1);
+		Mockito.when(input.read()).thenReturn((int)('1'));
 		sut = new ConsoleView(printStream, input);
 		
 		//run & verify 1
-		Mockito.when(input.read()).thenReturn(1);
+		Mockito.when(input.read()).thenReturn((int)('1'));
 		Event actual = sut.getUserEvent();
 		Event expected = Event.PlayPickNumer;
 		assertEquals(expected, actual);
 		
 		//run & verify 2
-		Mockito.when(input.read()).thenReturn(2);
+		Mockito.when(input.read()).thenReturn((int)('2'));
 		actual = sut.getUserEvent();
 		expected = Event.PlayNoMatchDealer;
 		assertEquals(expected, actual);
 		
 		//run & verify 3
-		Mockito.when(input.read()).thenReturn(3);
+		Mockito.when(input.read()).thenReturn((int)('3'));
 		actual = sut.getUserEvent();
 		expected = Event.PlayFindAce;
 		assertEquals(expected, actual);
 				
 		//run & verify 4
-		Mockito.when(input.read()).thenReturn(4);
+		Mockito.when(input.read()).thenReturn((int)('4'));
 		actual = sut.getUserEvent();
 		expected = Event.ViewHighscore;
 		assertEquals(expected, actual);
 		
 		//run & verify 5
-		Mockito.when(input.read()).thenReturn(5);
+		Mockito.when(input.read()).thenReturn((int)('5'));
 		actual = sut.getUserEvent();
 		expected = Event.ChangeName;
 		assertEquals(expected, actual);
 				
 		//run & verify 6
-		Mockito.when(input.read()).thenReturn(6);
+		Mockito.when(input.read()).thenReturn((int)('6'));
 		actual = sut.getUserEvent();
 		expected = Event.Reset;
 		assertEquals(expected, actual);
 		
 		//run & verify 7
-		Mockito.when(input.read()).thenReturn(7);
+		Mockito.when(input.read()).thenReturn((int)('7'));
 		actual = sut.getUserEvent();
 		expected = Event.Quit;
 		assertEquals(expected, actual);
@@ -127,17 +127,17 @@ public class ConsoleViewTest {
 		// initialize & mock
 		PrintStream printStream = mock(PrintStream.class);
 		BufferedReader input = mock(BufferedReader.class);
-		Mockito.when(input.read()).thenReturn(8).thenReturn(7);
+		Mockito.when(input.read()).thenReturn((int)('8')).thenReturn((int)('7'));
 		sut = new ConsoleView(printStream, input);
-		
+
 		// run
 		sut.getUserEvent();
 		
 		//verify
 		verify(printStream).println(ConsoleView.INVALID_CHOICE);
-		
 		// run + verify quit to terminate
 		Event actual = sut.getUserEvent();
+
 		Event expected = Event.Quit;
 		assertEquals(expected, actual);
 	}
@@ -185,6 +185,55 @@ public class ConsoleViewTest {
 		sut.showPickANumberGameRules();
 		
 		verify(printStream).println(ConsoleView.PickANumberGameRules);
+	}
+	
+	@Test(expected = IOException.class)
+	public void shouldThrowExceptionForGetANumberBetween() throws IOException{
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		Mockito.when(input.readLine()).thenThrow(new IOException());
+		sut.getNumberBetween(0, 10);
+	}
+	
+	@Test
+	public void shouldGetANumberBetween() throws IOException{
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		Mockito.when(input.readLine()).thenReturn("1");
+		
+		//default case
+		int actual = sut.getNumberBetween(0, 10);
+		int expected = 1;
+		assertEquals(expected, actual);
+		verify(printStream).println("Please enter an Integer-Number between: 0 - 10");
+		
+		// first a higher number, then a lower number and then user needs to put in again
+		Mockito.when(input.readLine()).thenReturn("11").thenReturn("-1").thenReturn("1");
+		actual = sut.getNumberBetween(0, 10);
+		assertEquals(expected, actual);
+		verify(printStream, times(2)).println("The Number must be in the given constraints!");
+
+		
+		// boundaries
+		actual = sut.getNumberBetween(1, 10);
+		assertEquals(expected, actual);
+		actual = sut.getNumberBetween(0, 1);
+		assertEquals(expected, actual);
+
+		// negative
+		Mockito.when(input.readLine()).thenReturn("-1");
+		actual = sut.getNumberBetween(-5, 0);
+		expected = -1;
+		assertEquals(expected, actual);
+		
+		// no Integer given
+		Mockito.when(input.readLine()).thenReturn("testing").thenReturn("1");
+		expected = 1;
+		actual = sut.getNumberBetween(0, 10);
+		assertEquals(expected, actual);
+		verify(printStream).println("This is not an valid Integer-Number");
 	}
 
 }

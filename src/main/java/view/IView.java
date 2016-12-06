@@ -16,7 +16,7 @@ public interface IView {
 	public String getName() throws IOException;
 	
 	public void showPickANumberGameRules();
-	public int getNumberBetween(int from, int until);
+	public int getNumberBetween(int from, int until) throws IOException;
 	public void showResultPickANumberGame(boolean won, int winningNumber);
 
 	public void showNotEnoughCredits();
