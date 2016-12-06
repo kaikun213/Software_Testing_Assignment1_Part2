@@ -191,6 +191,46 @@ public class GameControllerTest {
 		verify(game, times(1)).getWinningNumber();
 		verify(game, times(1)).hasWon();
 	}
+	
+	@Test
+	public void shouldCatchIOExceptionAndQuit() throws IOException{
+		// mock game and gameFactory
+		Mockito.when(view.getNumberBetween(any(Integer.class), any(Integer.class))).thenThrow(new IOException());
+		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayPickNumer).thenReturn(Event.Quit);
+		Mockito.doNothing().when(view).showPickANumberGameRules();
+		Mockito.doNothing().when(view).showMenu();
+		PickANumberGame game = Mockito.mock(PickANumberGame.class);
+		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
+		Mockito.when(gameFactory.getPickANumberGame(any(Player.class), any(Random.class))).thenReturn(game);
+
+		sut = new GameController(view, gameFactory);
+		
+		// run
+		player = sut.play(player);
+
+		verify(view, times(1)).showMenu();
+		verify(view, times(1)).getNumberBetween(any(Integer.class), any(Integer.class));
+	}
+	
+	@Test
+	public void shouldThrowNotEnoughCreditsNotification() throws IOException, NotEnoughCreditsException{
+		// mock game and gameFactory
+		Mockito.when(view.getNumberBetween(any(Integer.class), any(Integer.class))).thenReturn(1);
+		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayPickNumer).thenReturn(Event.Quit);
+		Mockito.doNothing().when(view).showPickANumberGameRules();
+		Mockito.doNothing().when(view).showMenu();
+		PickANumberGame game = Mockito.mock(PickANumberGame.class);
+		Mockito.doThrow(new NotEnoughCreditsException()).when(game).play(any(Integer.class));
+		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
+		Mockito.when(gameFactory.getPickANumberGame(any(Player.class), any(Random.class))).thenReturn(game);
+
+		sut = new GameController(view, gameFactory);
+		
+		// run
+		player = sut.play(player);
+		
+		verify(view, times(1)).showNotEnoughCredits();
+	}
 
 	
 }
