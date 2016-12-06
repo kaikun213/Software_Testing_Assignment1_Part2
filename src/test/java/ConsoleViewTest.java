@@ -173,7 +173,7 @@ public class ConsoleViewTest {
 		sut.showHighScore(Player.defaultCredits);
 		
 		verify(printStream).println("\n===================| HIGHSCORE |====================\n" +
-									"You currently have the high score of" + Player.defaultCredits +" credits!\n");
+									"You currently have the high score of " + Player.defaultCredits +" credits!\n");
 	}
 	
 	@Test
@@ -203,11 +203,19 @@ public class ConsoleViewTest {
 		sut = new ConsoleView(printStream, input);
 		Mockito.when(input.readLine()).thenReturn("1");
 		
-		//default case
-		int actual = sut.getNumberBetween(0, 10);
+		// null given first
+		Mockito.when(input.readLine()).thenReturn(null).thenReturn("1");
 		int expected = 1;
+		int actual = sut.getNumberBetween(0, 10);
 		assertEquals(expected, actual);
-		verify(printStream).println("Please enter an Integer-Number between: 0 - 10");
+		verify(printStream, times(0)).println("This is not an valid Integer-Number");
+		
+		//default case
+		actual = sut.getNumberBetween(0, 10);
+		expected = 1;
+		assertEquals(expected, actual);
+		// two times because second test
+		verify(printStream, times(2)).println("Please enter an Integer-Number between: 0 - 10");
 		
 		// first a higher number, then a lower number and then user needs to put in again
 		Mockito.when(input.readLine()).thenReturn("11").thenReturn("-1").thenReturn("1");
@@ -234,6 +242,7 @@ public class ConsoleViewTest {
 		actual = sut.getNumberBetween(0, 10);
 		assertEquals(expected, actual);
 		verify(printStream).println("This is not an valid Integer-Number");
+
 	}
 
 }
