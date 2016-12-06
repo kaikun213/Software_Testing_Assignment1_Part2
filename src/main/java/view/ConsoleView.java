@@ -9,7 +9,7 @@ import main.java.model.Player;
 
 public class ConsoleView implements IView{
 	
-	public final static String MENU = "-=[ Game of Chance MENU ]=-\n" +
+	public final static String MENU = "\n\n-=[ Game of Chance MENU ]=-\n" +
 									"1 - Play the pick a number game\n" +
 									"2 - Play the No Match Dealer game\n" +
 									"3 - Play the Find the Ace game\n" +
@@ -26,7 +26,11 @@ public class ConsoleView implements IView{
 														"This game costs 10 credits to play. Simply pick a number\n"+
 														"beetween 1 and 20, and if you pick the winning number, you\n"+
 														"will win the jackpot of 100 credits!\n\n";
+	public final static String PickANumberWinningStatement = "Congrats! You won the jackpot! And the winning number was : ";
+	public final static String PickANumberLoosingStatement = "Ahh damn it! You lost! The winning number was : ";
 	
+	public final static String NotEnoughCreditsNotification = "You do not have enough credits to play! Sorry.";
+
 	PrintStream out;
 	BufferedReader in;
 	
@@ -78,7 +82,7 @@ public class ConsoleView implements IView{
 
 	public void showHighScore(int highscore) {
 		out.println("\n===================| HIGHSCORE |====================\n" +
-					"You currently have the high score of" + highscore +" credits!\n");
+					"You currently have the high score of " + highscore +" credits!\n");
 	}
 
 	public void showPickANumberGameRules() {
@@ -88,12 +92,16 @@ public class ConsoleView implements IView{
 	public int getNumberBetween(int from, int until) throws IOException {
 		out.println("Please enter an Integer-Number between: "+ from + " - " + until);
 		int result = from -1;
+		String readResult;
 		do{
 			try{
-				result = Integer.parseInt(in.readLine());
-				if (result<from || result>until){
-					out.println("The Number must be in the given constraints!");
-					result = from-1;
+				readResult = in.readLine();
+				if (readResult != null) {
+					result = Integer.parseInt(readResult);
+					if (result<from || result>until){
+						out.println("The Number must be in the given constraints!");
+						result = from-1;
+					}
 				}
 			}
 			catch(NumberFormatException e){
@@ -105,19 +113,19 @@ public class ConsoleView implements IView{
 	}
 
 	public void showResultPickANumberGame(boolean won, int winningNumber) {
-		// TODO Auto-generated method stub
-		
+		if (won) out.println(PickANumberWinningStatement + winningNumber);
+		else out.println(PickANumberLoosingStatement + winningNumber);
 	}
 
 	public void showNotEnoughCredits() {
 		// PickANumberGame.CREDIT_COST = amount it costs
 		// TODO Auto-generated method stub
-		
+		out.println(NotEnoughCreditsNotification);
 	}
 
 	public void showCurrentState(String playerName, int playerCredits) {
 		// TODO Auto-generated method stub
-		
+		out.println("Player Name: " + playerName + "\nCredits: " + playerCredits);
 	}
 	
 	
