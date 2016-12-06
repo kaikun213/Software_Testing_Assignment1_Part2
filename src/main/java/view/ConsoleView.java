@@ -85,9 +85,23 @@ public class ConsoleView implements IView{
 		out.println(PickANumberGameRules);
 	}
 
-	public int getNumberBetween(int from, int until) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getNumberBetween(int from, int until) throws IOException {
+		out.println("Please enter an Integer-Number between: "+ from + " - " + until);
+		int result = from -1;
+		do{
+			try{
+				result = Integer.parseInt(in.readLine());
+				if (result<from || result>until){
+					out.println("The Number must be in the given constraints!");
+					result = from-1;
+				}
+			}
+			catch(NumberFormatException e){
+				out.println("This is not an valid Integer-Number");
+				result = from-1;
+			}
+		}while(result<from);
+		return result;
 	}
 
 	public void showResultPickANumberGame(boolean won, int winningNumber) {
