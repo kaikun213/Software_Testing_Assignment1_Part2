@@ -7,6 +7,7 @@ import java.util.Random;
 
 import main.java.model.IDealerNoMatchRandomNumbersObserver;
 import main.java.model.Player;
+import main.java.model.error.NotEnoughCreditsException;
 
 public class DealerNoMatchGame implements IDealerNoMatchGame {
 	
@@ -19,8 +20,9 @@ public class DealerNoMatchGame implements IDealerNoMatchGame {
 		this.rand = rand;
 	}
 	
+	public boolean play(int wager) throws NotEnoughCreditsException {
+		m_player.decreaseCredits(wager);
 
-	public boolean play() {
 		boolean result = true;
 		BitSet bits = new BitSet(100);
 		int nextNumber;
@@ -34,6 +36,8 @@ public class DealerNoMatchGame implements IDealerNoMatchGame {
 				s.randomNumberGenerated(nextNumber);
 			}
 		}
+		
+		if (result) m_player.increaseCredits(wager*2);
 		
 		return result;
 	}
