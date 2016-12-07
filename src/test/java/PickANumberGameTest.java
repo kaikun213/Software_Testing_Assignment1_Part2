@@ -9,8 +9,6 @@ import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import main.java.model.Player;
@@ -19,11 +17,8 @@ import main.java.model.game.PickANumberGame;
 
 public class PickANumberGameTest {
 	
-	@Mock
 	Player playerMock;
-	@Mock
 	Random randMock;
-	@InjectMocks
 	PickANumberGame sut;
 
 	@Before

@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import main.java.controller.GameController.Event;
+import main.java.model.IDealerNoMatchRandomNumbersObserver;
 import main.java.model.Player;
 import main.java.model.game.PickANumberGame;
 
-public class ConsoleView implements IView{
+public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 	
 	public final static String MENU = "\n\n-=[ Game of Chance MENU ]=-\n" +
 									"1 - Play the pick a number game\n" +
@@ -32,6 +33,12 @@ public class ConsoleView implements IView{
 	public final static String NotEnoughCreditsNotification = "You do not have enough credits to play! The game costs: ";
 	
 	public final static String GetName = "Please write your new name: ";
+	
+	public final static String DealerNoMatchGameRules = ":::::: No Match Dealer ::::::\n"
+														 +"In this game, you wager up to all of your credits.\n"
+														 +"The dealer will deal out 16 random numbers between 0 and 99 .\n"
+														 +"If there are no matches among them, you double your money!\n"
+														 +"Otherwise you lose all the money you bet with\n\n";
 
 	PrintStream out;
 	BufferedReader in;
@@ -131,6 +138,10 @@ public class ConsoleView implements IView{
 
 	public void showCurrentState(String playerName, int playerCredits) {
 		out.println("\nPlayer Name: " + playerName + "\nCredits: " + playerCredits);
+	}
+
+	public void randomNumberGenerated(int i) {
+		//out.println("Generated Number: " + i);
 	}
 	
 	

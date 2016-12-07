@@ -2,6 +2,7 @@ package main.java.controller;
 
 import java.io.IOException;
 
+import main.java.model.IDealerNoMatchRandomNumbersObserver;
 import main.java.model.Player;
 import main.java.model.error.NotEnoughCreditsException;
 import main.java.model.game.AbstractGameFactory;
@@ -82,6 +83,7 @@ public class GameController {
 				}
 			if (userChoice == Event.PlayNoMatchDealer){
 				IDealerNoMatchGame game2 = games.getDealerNoMatchGame(m_player);
+				game2.addSubscriber((IDealerNoMatchRandomNumbersObserver) m_view);
 			}
 			}
 
