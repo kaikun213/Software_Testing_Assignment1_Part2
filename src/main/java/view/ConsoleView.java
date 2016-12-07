@@ -14,13 +14,13 @@ public class ConsoleView implements IView{
 									"1 - Play the pick a number game\n" +
 									"2 - Play the No Match Dealer game\n" +
 									"3 - Play the Find the Ace game\n" +
-									"4 - View current high score\n" +
+									"4 - View your current high score\n" +
 									"5 - Change your user Name\n" +
 									"6 - Reset your account at 100 credits\n" +
 									"7 - Quit\n";
 	public final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n";
 	
-	public final static String INVALID_CHOICE = "This is an invalid selection of choice";
+	public final static String INVALID_CHOICE = " ASCII-value - this is an invalid selection of choice";
 	
 	public final static String PickANumberGameRules = 	"\n###### Pick a Number ######\n"+
 														"This game costs 10 credits to play. Simply pick a number\n"+
@@ -51,7 +51,7 @@ public class ConsoleView implements IView{
 
 		while(event == null){
 			choice = in.read();
-			if (choice == 0) event = null;	// repeat reading
+			if (choice == 0 || choice == 10 || choice == 13) event = null;	// repeat reading if it did not read or newline/carriage return
 			else if (choice == '1') event = Event.PlayPickNumer;
 			else if (choice == '2') event = Event.PlayNoMatchDealer;
 			else if (choice == '3') event = Event.PlayFindAce;
@@ -59,7 +59,7 @@ public class ConsoleView implements IView{
 			else if (choice == '5') event = Event.ChangeName;
 			else if (choice == '6') event = Event.Reset;
 			else if (choice == '7') event = Event.Quit;
-			else out.println(INVALID_CHOICE);
+			else out.println(choice + INVALID_CHOICE);
 		}
 	
 		return event;
@@ -103,7 +103,7 @@ public class ConsoleView implements IView{
 		do{
 			try{
 				readResult = in.readLine();
-				if (readResult != null) {
+				if (readResult != null && !readResult.isEmpty()) {
 					result = Integer.parseInt(readResult);
 					if (result<from || result>until){
 						out.println("The Number must be in the given constraints!");

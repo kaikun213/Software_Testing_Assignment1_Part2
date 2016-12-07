@@ -134,7 +134,7 @@ public class ConsoleViewTest {
 		sut.getUserEvent();
 		
 		//verify
-		verify(printStream).println(ConsoleView.INVALID_CHOICE);
+		verify(printStream).println((int)('8') + ConsoleView.INVALID_CHOICE);
 		// run + verify quit to terminate
 		Event actual = sut.getUserEvent();
 

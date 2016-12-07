@@ -19,9 +19,9 @@ public class PickANumberGame implements IPickANumberGame{
 	
 	public PickANumberGame(Player player, Random randomGenerator){
 		this.player = player;
-		rand = randomGenerator;
+		this.rand = randomGenerator;
 		this.currentNumber = 0;
-		won = false;
+		this.won = false;
 	}
 	
 	public void play(int guess) throws NotEnoughCreditsException{
