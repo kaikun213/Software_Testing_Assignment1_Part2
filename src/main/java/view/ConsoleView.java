@@ -6,6 +6,7 @@ import java.io.PrintStream;
 
 import main.java.controller.GameController.Event;
 import main.java.model.Player;
+import main.java.model.game.PickANumberGame;
 
 public class ConsoleView implements IView{
 	
@@ -29,7 +30,7 @@ public class ConsoleView implements IView{
 	public final static String PickANumberWinningStatement = "Congrats! You won the jackpot! And the winning number was : ";
 	public final static String PickANumberLoosingStatement = "Ahh damn it! You lost! The winning number was : ";
 	
-	public final static String NotEnoughCreditsNotification = "You do not have enough credits to play! Sorry.";
+	public final static String NotEnoughCreditsNotification = "You do not have enough credits to play! The game costs: ";
 
 	PrintStream out;
 	BufferedReader in;
@@ -119,12 +120,10 @@ public class ConsoleView implements IView{
 
 	public void showNotEnoughCredits() {
 		// PickANumberGame.CREDIT_COST = amount it costs
-		// TODO Auto-generated method stub
-		out.println(NotEnoughCreditsNotification);
+		out.println(NotEnoughCreditsNotification + PickANumberGame.CREDIT_COST);
 	}
 
 	public void showCurrentState(String playerName, int playerCredits) {
-		// TODO Auto-generated method stub
 		out.println("Player Name: " + playerName + "\nCredits: " + playerCredits);
 	}
 	
