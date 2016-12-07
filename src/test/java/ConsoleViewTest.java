@@ -242,7 +242,43 @@ public class ConsoleViewTest {
 		actual = sut.getNumberBetween(0, 10);
 		assertEquals(expected, actual);
 		verify(printStream).println("This is not an valid Integer-Number");
-
+	}
+	
+	@Test
+	public void shouldShowNotEnoughCredits(){
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		
+		sut.showNotEnoughCredits();
+		
+		verify(printStream, times(1)).println(ConsoleView.NotEnoughCreditsNotification + any(String.class));
+	}
+	
+	@Test
+	public void shouldShowCurrentState(){
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		
+		sut.showCurrentState("Tester", 5);
+		
+		verify(printStream, times(1)).println("Player Name: " + "Tester" + "\nCredits: " + "5");
+	}
+	
+	@Test
+	public void shouldShowResultPickANumberGame(){
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
+		
+		// lose
+		sut.showResultPickANumberGame(false, 5);
+		verify(printStream, times(1)).println(ConsoleView.PickANumberLoosingStatement + "5");
+		
+		// win
+		sut.showResultPickANumberGame(true, 5);
+		verify(printStream, times(1)).println(ConsoleView.PickANumberWinningStatement + "5");
 	}
 
 }
