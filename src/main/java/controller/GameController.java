@@ -38,6 +38,8 @@ public class GameController {
 
 		// start gameplay
 		do{
+			m_view.showCurrentState(m_player.getName(), m_player.getCredits());
+			
 			m_view.showMenu();
 			try {
 			userChoice = m_view.getUserEvent();
