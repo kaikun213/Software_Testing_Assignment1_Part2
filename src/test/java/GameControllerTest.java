@@ -17,10 +17,12 @@ import org.mockito.Mockito;
 
 import main.java.controller.GameController;
 import main.java.controller.GameController.Event;
+import main.java.model.IDealerNoMatchRandomNumbersObserver;
 import main.java.model.Player;
 import main.java.model.error.NotEnoughCreditsException;
 import main.java.model.game.AbstractGameFactory;
 import main.java.model.game.ConcreteGameFactoryA;
+import main.java.model.game.DealerNoMatchGame;
 import main.java.model.game.PickANumberGame;
 import main.java.view.ConsoleView;
 import main.java.view.IView;
@@ -30,12 +32,14 @@ public class GameControllerTest {
 	GameController sut;
 	IView view;
 	Player player;
+	AbstractGameFactory factory;
 	
 	@Before
 	public void setUp() throws Exception {
 		// initialize SUT
 		view = mock(ConsoleView.class);
-		sut = new GameController(view, new ConcreteGameFactoryA());
+		factory = mock(ConcreteGameFactoryA.class);
+		sut = new GameController(view, factory);
 		player = Mockito.mock(Player.class);
 
 	}
@@ -186,14 +190,11 @@ public class GameControllerTest {
 		Mockito.when(game.hasWon()).thenReturn(true);
 		Mockito.when(game.getWinningNumber()).thenReturn(5);
 		
-		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
-		Mockito.when(gameFactory.getPickANumberGame(any(Player.class))).thenReturn(game);
+		Mockito.when(factory.getPickANumberGame(any(Player.class))).thenReturn(game);
 		
 		Mockito.doNothing().when(player).decreaseCredits(any(Integer.class));
 		Mockito.doNothing().when(player).increaseCredits(any(Integer.class));
-		
-		sut = new GameController(view, gameFactory);
-		
+				
 		// run
 		player = sut.play(player);
 		
@@ -214,10 +215,7 @@ public class GameControllerTest {
 		Mockito.doNothing().when(view).showPickANumberGameRules();
 		Mockito.doNothing().when(view).showMenu();
 		PickANumberGame game = Mockito.mock(PickANumberGame.class);
-		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
-		Mockito.when(gameFactory.getPickANumberGame(any(Player.class))).thenReturn(game);
-
-		sut = new GameController(view, gameFactory);
+		Mockito.when(factory.getPickANumberGame(any(Player.class))).thenReturn(game);
 		
 		// run
 		player = sut.play(player);
@@ -235,16 +233,82 @@ public class GameControllerTest {
 		Mockito.doNothing().when(view).showMenu();
 		PickANumberGame game = Mockito.mock(PickANumberGame.class);
 		Mockito.doThrow(new NotEnoughCreditsException()).when(game).play(any(Integer.class));
-		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
-		Mockito.when(gameFactory.getPickANumberGame(any(Player.class))).thenReturn(game);
-
-		sut = new GameController(view, gameFactory);
+		Mockito.when(factory.getPickANumberGame(any(Player.class))).thenReturn(game);
 		
 		// run
 		player = sut.play(player);
 		
 		verify(view, times(1)).showNotEnoughCredits();
 	}
+	
+	@Test
+	public void shouldPlayDealerNoMatchGameAndWin() throws IOException, NotEnoughCreditsException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayNoMatchDealer).thenReturn(Event.Quit);
+		Mockito.doNothing().when(view).showDealerNoMatchGameRules();
+		Mockito.doNothing().when(view).showResultDealerNoMatchGame(any(Boolean.class));
+		Mockito.when(view.getWager()).thenReturn(50);
+		
+		DealerNoMatchGame game = Mockito.mock(DealerNoMatchGame.class);
+		Mockito.when(factory.getDealerNoMatchGame(any(Player.class))).thenReturn(game);
+		
+		Mockito.doNothing().when(game).addSubscriber(any(IDealerNoMatchRandomNumbersObserver.class));
+		Mockito.when(game.play(any(Integer.class))).thenReturn(true);
+				
+		sut.play(player);
+		
+		verify(factory, times(1)).getDealerNoMatchGame(any(Player.class));
+		verify(game, times(1)).addSubscriber(any(IDealerNoMatchRandomNumbersObserver.class));
+		verify(view, times(1)).showDealerNoMatchGameRules();
+		verify(view, times(1)).showResultDealerNoMatchGame(true);
+		verify(game, times(1)).play(50);
+	}
+	
+	@Test
+	public void shouldPlayDealerNoMatchGameAndLose() throws IOException, NotEnoughCreditsException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayNoMatchDealer).thenReturn(Event.Quit);
+		Mockito.doNothing().when(view).showDealerNoMatchGameRules();
+		Mockito.doNothing().when(view).showResultDealerNoMatchGame(any(Boolean.class));
+		Mockito.when(view.getWager()).thenReturn(33);
+		
+		DealerNoMatchGame game = Mockito.mock(DealerNoMatchGame.class);
+		Mockito.when(factory.getDealerNoMatchGame(any(Player.class))).thenReturn(game);
+		
+		Mockito.doNothing().when(game).addSubscriber(any(IDealerNoMatchRandomNumbersObserver.class));
+		Mockito.when(game.play(any(Integer.class))).thenReturn(false);
+	
+		sut.play(player);
+		
+		verify(factory, times(1)).getDealerNoMatchGame(any(Player.class));
+		verify(game, times(1)).addSubscriber(any(IDealerNoMatchRandomNumbersObserver.class));
+		verify(view, times(1)).showDealerNoMatchGameRules();
+		verify(view, times(1)).showResultDealerNoMatchGame(false);
+		verify(game, times(1)).play(33);
+	}
+	
+	@Test
+	public void shouldPlayDealerNoMatchGameAndNotifyNotEnoughCredits() throws IOException, NotEnoughCreditsException{
+		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayNoMatchDealer).thenReturn(Event.Quit);
+		Mockito.doNothing().when(view).showDealerNoMatchGameRules();
+		Mockito.doNothing().when(view).showResultDealerNoMatchGame(any(Boolean.class));
+		Mockito.when(view.getWager()).thenReturn(50);
+		
+		DealerNoMatchGame game = Mockito.mock(DealerNoMatchGame.class);
+		Mockito.when(factory.getDealerNoMatchGame(any(Player.class))).thenReturn(game);
+		
+		Mockito.doNothing().when(game).addSubscriber(any(IDealerNoMatchRandomNumbersObserver.class));
+		Mockito.doThrow(NotEnoughCreditsException.class).when(game).play(any(Integer.class));
+		
+		sut.play(player);
+		
+		verify(factory, times(1)).getDealerNoMatchGame(any(Player.class));
+		verify(game, times(1)).addSubscriber(any(IDealerNoMatchRandomNumbersObserver.class));
+		verify(view, times(1)).showDealerNoMatchGameRules();
+		verify(game, times(1)).play(50);
+		verify(view, times(1)).showNotEnoughCredits();
+		
+		verify(view, times(1)).showNotEnoughCredits();// should be called when not enough credits!
+	}
+	
 
 	
 }
