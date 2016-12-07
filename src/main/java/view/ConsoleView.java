@@ -18,8 +18,7 @@ public class ConsoleView implements IView{
 									"5 - Change your user Name\n" +
 									"6 - Reset your account at 100 credits\n" +
 									"7 - Quit\n";
-	public final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n" +
-										"Enter your Name:";
+	public final static String REGISTER = "-=-=-{ NEW PLAYER REGISTRATION }-=-=-\n";
 	
 	public final static String INVALID_CHOICE = "This is an invalid selection of choice";
 	
@@ -31,6 +30,8 @@ public class ConsoleView implements IView{
 	public final static String PickANumberLoosingStatement = "Ahh damn it! You lost! The winning number was : ";
 	
 	public final static String NotEnoughCreditsNotification = "You do not have enough credits to play! The game costs: ";
+	
+	public final static String GetName = "Please write your new name: ";
 
 	PrintStream out;
 	BufferedReader in;
@@ -50,7 +51,8 @@ public class ConsoleView implements IView{
 
 		while(event == null){
 			choice = in.read();
-			if (choice == '1') event = Event.PlayPickNumer;
+			if (choice == 0) event = null;	// repeat reading
+			else if (choice == '1') event = Event.PlayPickNumer;
 			else if (choice == '2') event = Event.PlayNoMatchDealer;
 			else if (choice == '3') event = Event.PlayFindAce;
 			else if (choice == '4') event = Event.ViewHighscore;
@@ -77,7 +79,11 @@ public class ConsoleView implements IView{
 	}
 	
 	public String getName() throws IOException{
-		String name = in.readLine();
+		out.println(GetName);
+		String name = "";
+		while (name.isEmpty()){
+			name = in.readLine();
+		}
 		return name;
 	}
 
@@ -124,7 +130,7 @@ public class ConsoleView implements IView{
 	}
 
 	public void showCurrentState(String playerName, int playerCredits) {
-		out.println("Player Name: " + playerName + "\nCredits: " + playerCredits);
+		out.println("\nPlayer Name: " + playerName + "\nCredits: " + playerCredits);
 	}
 	
 	
