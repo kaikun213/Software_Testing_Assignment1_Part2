@@ -1,6 +1,5 @@
 package test.java;
 
-import static org.junit.Assert.*;
 
 import java.util.Random;
 
@@ -14,11 +13,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.mockito.Mockito.any;
 
 import main.java.model.Player;
-import main.java.model.error.NotEnoughCreditsException;
 import main.java.model.game.AbstractGameFactory;
 import main.java.model.game.ConcreteGameFactoryA;
 import main.java.model.game.DealerNoMatchGame;
-import main.java.model.game.IPickANumberGame;
 import main.java.model.game.PickANumberGame;
 
 
@@ -27,22 +24,15 @@ import main.java.model.game.PickANumberGame;
 public class ConcreteGameFactoryATest {
 
 	@Test
-	public void testPickANumberGameCreation() throws NotEnoughCreditsException {
-		// Alternative: Behavior test instead of verify with PowerMockito -> (not fully covered test)
-		Player playerMock = Mockito.mock(Player.class);
-		Random randomMock = Mockito.mock(Random.class);
-		Mockito.doNothing().when(playerMock).decreaseCredits(any(Integer.class));
-		Mockito.doNothing().when(playerMock).increaseCredits(any(Integer.class));
-		Mockito.when(randomMock.nextInt(any(Integer.class))).thenReturn(PickANumberGame.MIN_NUMBER);
-		IPickANumberGame expected = new PickANumberGame(playerMock, randomMock);
+	public void testPickANumberGameCreation() throws Exception {
 		AbstractGameFactory sut = new ConcreteGameFactoryA();
-		IPickANumberGame actual = sut.getPickANumberGame(playerMock);
-
-		// test if behavior is the same
-		expected.play(PickANumberGame.MIN_NUMBER);
-		actual.play(PickANumberGame.MIN_NUMBER);
+		Player playerMock = Mockito.mock(Player.class);
+		PickANumberGame gameMock = Mockito.mock(PickANumberGame.class);
+		PowerMockito.whenNew(PickANumberGame.class).withAnyArguments().thenReturn(gameMock);
 		
-		assertEquals(expected.hasWon(), actual.hasWon());
+		sut.getPickANumberGame(playerMock);
+		
+		PowerMockito.verifyNew(PickANumberGame.class).withArguments(any(playerMock.getClass()), any(Random.class));
 	}
 	
 	@Test
