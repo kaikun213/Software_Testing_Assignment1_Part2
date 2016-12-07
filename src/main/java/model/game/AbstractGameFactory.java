@@ -1,6 +1,5 @@
 package main.java.model.game;
 
-import java.util.Random;
 
 import main.java.model.Player;
 
@@ -10,6 +9,7 @@ public abstract class AbstractGameFactory {
 		
 	}
 	
-	public abstract IPickANumberGame getPickANumberGame(Player a_player, Random rand);
+	public abstract IPickANumberGame getPickANumberGame(Player a_player);
+	public abstract IDealerNoMatchGame getDealerNoMatchGame(Player a_player);
 
 }

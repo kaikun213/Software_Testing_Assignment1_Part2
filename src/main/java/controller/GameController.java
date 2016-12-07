@@ -1,11 +1,11 @@
 package main.java.controller;
 
 import java.io.IOException;
-import java.util.Random;
 
 import main.java.model.Player;
 import main.java.model.error.NotEnoughCreditsException;
 import main.java.model.game.AbstractGameFactory;
+import main.java.model.game.IDealerNoMatchGame;
 import main.java.model.game.IPickANumberGame;
 import main.java.model.game.PickANumberGame;
 import main.java.view.IView;
@@ -66,7 +66,7 @@ public class GameController {
 			}
 			
 			if (userChoice == Event.PlayPickNumer){
-				IPickANumberGame game = games.getPickANumberGame(m_player, new Random());
+				IPickANumberGame game = games.getPickANumberGame(m_player);
 				m_view.showPickANumberGameRules();
 				int guess;
 				try {
@@ -80,6 +80,9 @@ public class GameController {
 				} catch (IOException e1) {
 					userChoice = Event.Quit;	// IO-Exception = Quit Application (Requirement)
 				}
+			if (userChoice == Event.PlayNoMatchDealer){
+				IDealerNoMatchGame game2 = games.getDealerNoMatchGame(m_player);
+			}
 			}
 
 		}while(userChoice != Event.Quit);

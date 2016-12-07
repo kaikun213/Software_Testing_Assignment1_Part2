@@ -4,7 +4,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
-import java.util.Random;
 
 import static org.mockito.Mockito.times;
 import static org.junit.Assert.*;
@@ -188,7 +187,7 @@ public class GameControllerTest {
 		Mockito.when(game.getWinningNumber()).thenReturn(5);
 		
 		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
-		Mockito.when(gameFactory.getPickANumberGame(any(Player.class), any(Random.class))).thenReturn(game);
+		Mockito.when(gameFactory.getPickANumberGame(any(Player.class))).thenReturn(game);
 		
 		Mockito.doNothing().when(player).decreaseCredits(any(Integer.class));
 		Mockito.doNothing().when(player).increaseCredits(any(Integer.class));
@@ -216,7 +215,7 @@ public class GameControllerTest {
 		Mockito.doNothing().when(view).showMenu();
 		PickANumberGame game = Mockito.mock(PickANumberGame.class);
 		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
-		Mockito.when(gameFactory.getPickANumberGame(any(Player.class), any(Random.class))).thenReturn(game);
+		Mockito.when(gameFactory.getPickANumberGame(any(Player.class))).thenReturn(game);
 
 		sut = new GameController(view, gameFactory);
 		
@@ -237,7 +236,7 @@ public class GameControllerTest {
 		PickANumberGame game = Mockito.mock(PickANumberGame.class);
 		Mockito.doThrow(new NotEnoughCreditsException()).when(game).play(any(Integer.class));
 		AbstractGameFactory gameFactory = Mockito.mock(ConcreteGameFactoryA.class);
-		Mockito.when(gameFactory.getPickANumberGame(any(Player.class), any(Random.class))).thenReturn(game);
+		Mockito.when(gameFactory.getPickANumberGame(any(Player.class))).thenReturn(game);
 
 		sut = new GameController(view, gameFactory);
 		

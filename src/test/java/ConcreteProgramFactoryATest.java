@@ -53,7 +53,6 @@ public class ConcreteProgramFactoryATest {
 		sut.getAController(viewMock);
 		
 		// verify
-		//assertEquals(controllerMock, actual);
 		PowerMockito.verifyNew(GameController.class).withArguments(any(viewMock.getClass()), any(ConcreteGameFactoryA.class));
 	}
 
