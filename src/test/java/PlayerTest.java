@@ -44,6 +44,20 @@ public class PlayerTest {
 	}
 	
 	@Test
+	public void shouldIncreaseCreditsAndNotSetHighscore(){
+		sut.resetCredits();
+		sut.increaseCredits(100);
+		int highscore = sut.getHighscore();
+		
+		sut.resetCredits();
+		sut.increaseCredits(50);
+
+		
+		assertEquals(Player.defaultCredits + 50, sut.getCredits());
+		assertEquals(highscore, sut.getHighscore());
+	}
+	
+	@Test
 	public void shouldDecreaseCredits() throws NotEnoughCreditsException{
 		sut.resetCredits();
 		sut.decreaseCredits(50);

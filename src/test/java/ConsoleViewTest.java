@@ -142,6 +142,22 @@ public class ConsoleViewTest {
 		assertEquals(expected, actual);
 	}
 	
+	@Test
+	public void shouldRepeatReading() throws IOException{
+		// initialize & mock
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		Mockito.when(input.read()).thenReturn(0).thenReturn(10).thenReturn(13).thenReturn((int)('7'));
+		sut = new ConsoleView(printStream, input);
+
+		// run
+		Event actual = sut.getUserEvent();
+		Event expected = Event.Quit;
+		
+		verify(input, times(4)).read();
+		assertEquals(expected, actual);
+	}
+	
 	@Test(expected = IOException.class)
 	public void shouldFailReadUserLine() throws IOException{
 		PrintStream printStream = mock(PrintStream.class);
@@ -216,12 +232,13 @@ public class ConsoleViewTest {
 		sut = new ConsoleView(printStream, input);
 		Mockito.when(input.readLine()).thenReturn("1");
 		
-		// null given first
-		Mockito.when(input.readLine()).thenReturn(null).thenReturn("1");
+		// null & empty given first
+		Mockito.when(input.readLine()).thenReturn(null).thenReturn("").thenReturn("1");
 		int expected = 1;
 		int actual = sut.getNumberBetween(0, 10);
 		assertEquals(expected, actual);
 		verify(printStream, times(0)).println("This is not an valid Integer-Number");
+
 		
 		//default case
 		actual = sut.getNumberBetween(0, 10);

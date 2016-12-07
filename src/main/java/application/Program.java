@@ -1,23 +1,23 @@
 package main.java.application;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import javax.xml.bind.JAXBException;
 
-import main.java.controller.GameController;
-import main.java.model.game.ConcreteGameFactoryA;
-import main.java.view.ConsoleView;
+import main.java.model.application.AbstractProgramFactory;
+import main.java.model.application.ConcreteProgramFactoryA;
+
 import main.java.view.IView;
 
 public class Program {
 
 	public static void main(String[] args) {
+		// manual testing
 		GameOfChance game = new GameOfChance();
-		IView view = new ConsoleView(System.out, new BufferedReader(new InputStreamReader(System.in)));
-
+		AbstractProgramFactory factory = new ConcreteProgramFactoryA();
+		
+		// factory dependent
 		try {
-			game.run(new GameController(view, new ConcreteGameFactoryA()));
+			IView view = factory.getAView();
+			game.run(factory.getAController(view));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
