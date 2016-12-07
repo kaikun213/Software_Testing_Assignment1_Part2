@@ -143,6 +143,21 @@ public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 	public void randomNumberGenerated(int i) {
 		//out.println("Generated Number: " + i);
 	}
+
+	public void showDealerNoMatchGameRules() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getWager() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void showResultDealerNoMatchGame(boolean won) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

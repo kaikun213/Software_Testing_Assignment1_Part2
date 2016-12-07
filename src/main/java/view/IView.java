@@ -14,13 +14,15 @@ public interface IView {
 	public Player registerPlayer();
 	public Event getUserEvent() throws IOException;
 	public String getName() throws IOException;
+	public void showNotEnoughCredits();
+	public void showCurrentState(String playerName, int playerCredits);
 	
 	public void showPickANumberGameRules();
 	public int getNumberBetween(int from, int until) throws IOException;
 	public void showResultPickANumberGame(boolean won, int winningNumber);
 
-	public void showNotEnoughCredits();
-	
-	public void showCurrentState(String playerName, int playerCredits);
+	public void showDealerNoMatchGameRules();
+	public int getWager();
+	public void showResultDealerNoMatchGame(boolean won);
 
 }
