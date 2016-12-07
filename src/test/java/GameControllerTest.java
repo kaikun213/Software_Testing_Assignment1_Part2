@@ -44,18 +44,33 @@ public class GameControllerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	@Test
+	public void shouldShowCurrentState() throws IOException {
+		// mocking so it terminates
+		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
+		Mockito.when(player.getName()).thenReturn("Tester");
+		Mockito.when(player.getCredits()).thenReturn(5);
+		Mockito.doNothing().when(view).showMenu();
+		// run
+		sut.play(player);
+		
+		// verify
+		verify(view).showCurrentState("Tester", 5);
+	}
 
 	@Test
 	public void shouldShowMenu() throws IOException {
 		// mocking so it terminates
 		Mockito.when(view.getUserEvent()).thenReturn(Event.Quit);
-
+		Mockito.when(player.getName()).thenReturn("Tester");
+		Mockito.when(player.getCredits()).thenReturn(5);
+		
 		// run
 		sut.play(player);
 		
 		// verify
 		verify(view).showMenu();
-		
 	}
 	
 	@Test
