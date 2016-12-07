@@ -165,6 +165,19 @@ public class ConsoleViewTest {
 	}
 	
 	@Test
+	public void shouldGetName() throws IOException{
+		PrintStream printStream = mock(PrintStream.class);
+		BufferedReader input = mock(BufferedReader.class);
+		Mockito.when(input.readLine()).thenReturn("Tester");
+		sut = new ConsoleView(printStream, input);
+		
+		String name = sut.getName();
+		
+		assertEquals("Tester", name);
+		verify(printStream, times(1)).println(ConsoleView.GetName);
+	}
+	
+	@Test
 	public void shouldShowHighScore(){
 		PrintStream printStream = mock(PrintStream.class);
 		BufferedReader input = mock(BufferedReader.class);
@@ -263,7 +276,7 @@ public class ConsoleViewTest {
 		
 		sut.showCurrentState("Tester", 5);
 		
-		verify(printStream, times(1)).println("Player Name: " + "Tester" + "\nCredits: " + "5");
+		verify(printStream, times(1)).println("\nPlayer Name: " + "Tester" + "\nCredits: " + "5");
 	}
 	
 	@Test
