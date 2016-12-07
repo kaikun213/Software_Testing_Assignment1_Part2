@@ -81,10 +81,17 @@ public class GameController {
 				} catch (IOException e1) {
 					userChoice = Event.Quit;	// IO-Exception = Quit Application (Requirement)
 				}
+			}
 			if (userChoice == Event.PlayNoMatchDealer){
 				IDealerNoMatchGame game2 = games.getDealerNoMatchGame(m_player);
 				game2.addSubscriber((IDealerNoMatchRandomNumbersObserver) m_view);
-			}
+				
+				m_view.showDealerNoMatchGameRules();
+				try {
+					m_view.showResultDealerNoMatchGame(game2.play(m_view.getWager()));
+				} catch (NotEnoughCreditsException e) {
+					 m_view.showNotEnoughCredits();
+				}
 			}
 
 		}while(userChoice != Event.Quit);
