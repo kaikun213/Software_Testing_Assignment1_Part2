@@ -141,7 +141,7 @@ public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 	}
 
 	public void randomNumberGenerated(int i) {
-		//out.println("Generated Number: " + i);
+		out.println("Generated Number: " + i);
 	}
 
 	public void showDealerNoMatchGameRules() {
