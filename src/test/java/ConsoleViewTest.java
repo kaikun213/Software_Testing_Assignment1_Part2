@@ -20,9 +20,14 @@ import main.java.view.ConsoleView;
 public class ConsoleViewTest {
 	
 	ConsoleView sut;
-
+	PrintStream printStream;
+	BufferedReader input;
+	
 	@Before
 	public void setUp() throws Exception {
+		printStream = mock(PrintStream.class);
+		input = mock(BufferedReader.class);
+		sut = new ConsoleView(printStream, input);
 	}
 
 	@After
@@ -31,8 +36,6 @@ public class ConsoleViewTest {
 
 	@Test
 	public void shouldShowMenu() {
-		PrintStream printStream = mock(PrintStream.class);
-		sut = new ConsoleView(printStream, new BufferedReader(new InputStreamReader(System.in)));
 		
 		sut.showMenu();
 		
@@ -42,14 +45,11 @@ public class ConsoleViewTest {
 	@Test
 	public void shouldRegisterPlayer(){
 		// initialize & mock
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		try {
 			Mockito.when(input.readLine()).thenReturn("Test name");
 		} catch (IOException e1) {
 			fail("Failed Test by trying to mock readLine-method");
 		}
-		sut = new ConsoleView(printStream, input);
 		
 		//run system
 		Player tester = sut.registerPlayer();
@@ -74,10 +74,7 @@ public class ConsoleViewTest {
 	@Test 
 	public void shouldGetUserEvent() throws IOException{
 		// initialize & mock
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		Mockito.when(input.read()).thenReturn((int)('1'));
-		sut = new ConsoleView(printStream, input);
 		
 		//run & verify 1
 		Mockito.when(input.read()).thenReturn((int)('1'));
@@ -125,10 +122,7 @@ public class ConsoleViewTest {
 	@Test
 	public void shouldOutPutInvalidChoice() throws IOException{
 		// initialize & mock
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		Mockito.when(input.read()).thenReturn((int)('8')).thenReturn((int)('7'));
-		sut = new ConsoleView(printStream, input);
 
 		// run
 		sut.getUserEvent();
@@ -145,10 +139,7 @@ public class ConsoleViewTest {
 	@Test
 	public void shouldRepeatReading() throws IOException{
 		// initialize & mock
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		Mockito.when(input.read()).thenReturn(0).thenReturn(10).thenReturn(13).thenReturn((int)('7'));
-		sut = new ConsoleView(printStream, input);
 
 		// run
 		Event actual = sut.getUserEvent();
@@ -160,20 +151,14 @@ public class ConsoleViewTest {
 	
 	@Test(expected = IOException.class)
 	public void shouldFailReadUserLine() throws IOException{
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		Mockito.when(input.read()).thenThrow(new IOException());
-		sut = new ConsoleView(printStream, input);
 		
 		sut.getUserEvent();
 	}
 	
 	@Test
 	public void shouldFailToReadName() throws IOException{
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		Mockito.when(input.readLine()).thenThrow(new IOException());
-		sut = new ConsoleView(printStream, input);
 		
 		Player tester = sut.registerPlayer();
 		
@@ -182,10 +167,7 @@ public class ConsoleViewTest {
 	
 	@Test
 	public void shouldGetName() throws IOException{
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
 		Mockito.when(input.readLine()).thenReturn("Tester");
-		sut = new ConsoleView(printStream, input);
 		
 		String name = sut.getName();
 		
@@ -194,11 +176,7 @@ public class ConsoleViewTest {
 	}
 	
 	@Test
-	public void shouldShowHighScore(){
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
-		
+	public void shouldShowHighScore(){		
 		sut.showHighScore(Player.defaultCredits);
 		
 		verify(printStream).println("\n===================| HIGHSCORE |====================\n" +
@@ -207,9 +185,6 @@ public class ConsoleViewTest {
 	
 	@Test
 	public void shouldShowPickANumberGameRules(){
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
 		
 		sut.showPickANumberGameRules();
 		
@@ -218,18 +193,13 @@ public class ConsoleViewTest {
 	
 	@Test(expected = IOException.class)
 	public void shouldThrowExceptionForGetANumberBetween() throws IOException{
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
 		Mockito.when(input.readLine()).thenThrow(new IOException());
+		
 		sut.getNumberBetween(0, 10);
 	}
 	
 	@Test
 	public void shouldGetANumberBetween() throws IOException{
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
 		Mockito.when(input.readLine()).thenReturn("1");
 		
 		// null & empty given first
@@ -276,9 +246,6 @@ public class ConsoleViewTest {
 	
 	@Test
 	public void shouldShowNotEnoughCredits(){
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
 		
 		sut.showNotEnoughCredits();
 		
@@ -287,9 +254,6 @@ public class ConsoleViewTest {
 	
 	@Test
 	public void shouldShowCurrentState(){
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
 		
 		sut.showCurrentState("Tester", 5);
 		
@@ -298,10 +262,6 @@ public class ConsoleViewTest {
 	
 	@Test
 	public void shouldShowResultPickANumberGame(){
-		PrintStream printStream = mock(PrintStream.class);
-		BufferedReader input = mock(BufferedReader.class);
-		sut = new ConsoleView(printStream, input);
-		
 		// lose
 		sut.showResultPickANumberGame(false, 5);
 		verify(printStream, times(1)).println(ConsoleView.PickANumberLoosingStatement + "5");
@@ -309,6 +269,14 @@ public class ConsoleViewTest {
 		// win
 		sut.showResultPickANumberGame(true, 5);
 		verify(printStream, times(1)).println(ConsoleView.PickANumberWinningStatement + "5");
+	}
+	
+	@Test
+	public void shouldShowRandomGeneratedNumber(){
+		// observer pattern
+		
+		sut.randomNumberGenerated(5);
+		verify(printStream, times(1)).println("Generated Number: "+5);
 	}
 
 }
