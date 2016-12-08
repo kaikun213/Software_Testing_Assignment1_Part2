@@ -283,5 +283,37 @@ public class ConsoleViewTest {
 		
 		verify(printStream, times(1)).println(ConsoleView.DealerNoMatchGameRules);
 	}
+	
+	@Test
+	public void shouldGetWager() throws IOException{
+		// getNumberBetween-function used which is already tested
+		Mockito.when(input.readLine()).thenReturn("1");
+		int actual = sut.getWager(50);
+		if (actual<1 || actual>50) fail("GetWager method returned an invalid number");
+		
+		Mockito.when(input.readLine()).thenReturn("testing").thenReturn("0").thenReturn("51").thenReturn("1");
+		actual = sut.getWager(50);
+		if (actual<1 || actual>50) fail("GetWager method returned an invalid number");
+		assertEquals(1, actual);
+	}
+	
+	@Test
+	public void shouldGetWagerAndThrowIOException() throws IOException{
+		// getNumberBetween-function used which is already tested
+		Mockito.doThrow(IOException.class).when(input).readLine();
+		int actual = sut.getWager(50);
+		assertEquals(0, actual);
+		
+		verify(printStream, times(1)).println(ConsoleView.YouPlayAZeroRound);
+	}
+	
+	@Test
+	public void shouldShowResultDealerNoMatchGame(){
+		sut.showResultDealerNoMatchGame(false);
+		verify(printStream, times(1)).println(ConsoleView.DealerNoMatchLoosingStatement);
+
+		sut.showResultDealerNoMatchGame(true);
+		verify(printStream, times(1)).println(ConsoleView.DealerNoMatchWinningStatement);
+	}
 
 }
