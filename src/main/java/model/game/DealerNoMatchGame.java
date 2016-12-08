@@ -34,6 +34,7 @@ public class DealerNoMatchGame implements IDealerNoMatchGame {
 			
 			for (IDealerNoMatchRandomNumbersObserver s : subscribers){
 				s.randomNumberGenerated(nextNumber);
+				delay(500);
 			}
 		}
 		
@@ -41,7 +42,16 @@ public class DealerNoMatchGame implements IDealerNoMatchGame {
 		
 		return result;
 	}
-
+	
+	@CoverageIgnore
+	private void delay(Integer ms){
+		// make it a bit more exciting
+		try {
+			Thread.sleep(ms);
+		} catch (InterruptedException e) {
+		}
+	}
+	
 	public void addSubscriber(IDealerNoMatchRandomNumbersObserver observer) {
 		subscribers.add(observer);		
 	}

@@ -92,6 +92,8 @@
 				<format>xml</format>
 			</formats>
 			<instrumentation>
+			<ignoreTrivial>true</ignoreTrivial>
+    		<ignoreMethodAnnotation>main.java.model.game.CoverageIgnore</ignoreMethodAnnotation>
 		        <ignores>
 		          <ignore>test.java.*</ignore>
 		          <ignore>test.resources.*</ignore>
@@ -107,6 +109,7 @@
 		          <exclude>target/test-classes/test/java/*.class</exclude>
 		          <exclude>target/test-classes/**/*Test.class</exclude>
 		          <exclude>**/main/java/application/Program.class</exclude>
+		          <exclude>target/generated-classes/*.class</exclude>
 		          <exclude>test/java/*.class</exclude>
 		          <exclude>**/test/**/*.*</exclude>
 		        </excludes>

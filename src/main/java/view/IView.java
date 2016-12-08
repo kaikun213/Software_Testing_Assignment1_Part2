@@ -22,7 +22,7 @@ public interface IView {
 	public void showResultPickANumberGame(boolean won, int winningNumber);
 
 	public void showDealerNoMatchGameRules();
-	public int getWager();
+	public int getWager(int maxCredits);
 	public void showResultDealerNoMatchGame(boolean won);
 
 }

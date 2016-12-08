@@ -88,7 +88,7 @@ public class GameController {
 				
 				m_view.showDealerNoMatchGameRules();
 				try {
-					m_view.showResultDealerNoMatchGame(game2.play(m_view.getWager()));
+					m_view.showResultDealerNoMatchGame(game2.play(m_view.getWager(m_player.getCredits())));
 				} catch (NotEnoughCreditsException e) {
 					 m_view.showNotEnoughCredits();
 				}

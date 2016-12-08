@@ -246,7 +246,8 @@ public class GameControllerTest {
 		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayNoMatchDealer).thenReturn(Event.Quit);
 		Mockito.doNothing().when(view).showDealerNoMatchGameRules();
 		Mockito.doNothing().when(view).showResultDealerNoMatchGame(any(Boolean.class));
-		Mockito.when(view.getWager()).thenReturn(50);
+		Mockito.when(view.getWager(any(Integer.class))).thenReturn(50);
+		Mockito.when(player.getCredits()).thenReturn(50);
 		
 		DealerNoMatchGame game = Mockito.mock(DealerNoMatchGame.class);
 		Mockito.when(factory.getDealerNoMatchGame(any(Player.class))).thenReturn(game);
@@ -268,7 +269,9 @@ public class GameControllerTest {
 		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayNoMatchDealer).thenReturn(Event.Quit);
 		Mockito.doNothing().when(view).showDealerNoMatchGameRules();
 		Mockito.doNothing().when(view).showResultDealerNoMatchGame(any(Boolean.class));
-		Mockito.when(view.getWager()).thenReturn(33);
+		Mockito.when(view.getWager(any(Integer.class))).thenReturn(33);
+		Mockito.when(player.getCredits()).thenReturn(50);
+
 		
 		DealerNoMatchGame game = Mockito.mock(DealerNoMatchGame.class);
 		Mockito.when(factory.getDealerNoMatchGame(any(Player.class))).thenReturn(game);
@@ -290,7 +293,8 @@ public class GameControllerTest {
 		Mockito.when(view.getUserEvent()).thenReturn(Event.PlayNoMatchDealer).thenReturn(Event.Quit);
 		Mockito.doNothing().when(view).showDealerNoMatchGameRules();
 		Mockito.doNothing().when(view).showResultDealerNoMatchGame(any(Boolean.class));
-		Mockito.when(view.getWager()).thenReturn(50);
+		Mockito.when(view.getWager(any(Integer.class))).thenReturn(50);
+		Mockito.when(player.getCredits()).thenReturn(50);
 		
 		DealerNoMatchGame game = Mockito.mock(DealerNoMatchGame.class);
 		Mockito.when(factory.getDealerNoMatchGame(any(Player.class))).thenReturn(game);
