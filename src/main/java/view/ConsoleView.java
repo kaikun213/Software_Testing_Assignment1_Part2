@@ -145,8 +145,7 @@ public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 	}
 
 	public void showDealerNoMatchGameRules() {
-		// TODO Auto-generated method stub
-		
+		out.println(DealerNoMatchGameRules);
 	}
 
 	public int getWager() {
