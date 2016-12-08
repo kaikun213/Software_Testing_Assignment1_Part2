@@ -32,6 +32,8 @@ public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 	
 	public final static String NotEnoughCreditsNotification = "You do not have enough credits to play! The game costs: ";
 	
+	public final static String YouPlayAZeroRound = "\nYou do not have enough credits or the input is invalid. You play with wager 0\n";
+	
 	public final static String GetName = "Please write your new name: ";
 	
 	public final static String DealerNoMatchGameRules = ":::::: No Match Dealer ::::::\n"
@@ -39,6 +41,9 @@ public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 														 +"The dealer will deal out 16 random numbers between 0 and 99 .\n"
 														 +"If there are no matches among them, you double your money!\n"
 														 +"Otherwise you lose all the money you bet with\n\n";
+	public final static String DealerNoMatchWinningStatement = "Congrats! You won and doubled your waged money";
+	public final static String DealerNoMatchLoosingStatement = "Ahh damin it! You lost! You money is gone..";
+
 
 	PrintStream out;
 	BufferedReader in;
@@ -148,14 +153,20 @@ public class ConsoleView implements IView, IDealerNoMatchRandomNumbersObserver{
 		out.println(DealerNoMatchGameRules);
 	}
 
-	public int getWager() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getWager(int maxCredits) {
+		int result = 0;
+		try {
+			result = getNumberBetween(1,maxCredits);
+		}
+		catch (IOException e){
+			out.println(YouPlayAZeroRound);
+		}
+		return result;	// return 0 and play for nothing if IO-Exception (requirements)
 	}
 
 	public void showResultDealerNoMatchGame(boolean won) {
-		// TODO Auto-generated method stub
-		
+		if (won) out.println(DealerNoMatchWinningStatement);
+		else out.println(DealerNoMatchLoosingStatement);
 	}
 	
 	
