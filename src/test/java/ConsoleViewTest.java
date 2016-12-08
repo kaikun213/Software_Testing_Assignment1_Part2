@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import org.junit.After;
@@ -274,9 +273,15 @@ public class ConsoleViewTest {
 	@Test
 	public void shouldShowRandomGeneratedNumber(){
 		// observer pattern
-		
 		sut.randomNumberGenerated(5);
 		verify(printStream, times(1)).println("Generated Number: "+5);
+	}
+	
+	@Test
+	public void shouldShowDealerNoMatchGameRules(){
+		sut.showDealerNoMatchGameRules();
+		
+		verify(printStream, times(1)).println(ConsoleView.DealerNoMatchGameRules);
 	}
 
 }
