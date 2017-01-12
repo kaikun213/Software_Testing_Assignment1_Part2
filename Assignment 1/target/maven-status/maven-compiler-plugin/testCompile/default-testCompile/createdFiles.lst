@@ -1,0 +1,6 @@
+test/java/PlayerTest.class
+test/java/PlayerDAOTest.class
+test/java/GameControllerStaticTest.class
+test/java/GameOfChanceTest.class
+test/java/ConsoleViewTest.class
+test/java/GameControllerTest.class
